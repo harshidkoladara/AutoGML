@@ -1,0 +1,144 @@
+{% extends 'base_obj.html'%} {% block body %}
+<section
+  style="height: 30vh"
+  id="hero"
+  class="d-flex justify-cntent-center align-items-center"
+></section>
+
+<br /><br />
+<section id="portfolio" class="portfoio">
+  <div class="container" data-aos="fade-up">
+    <!-- Training Parameter Start -->
+    <div id="training-parameters">
+      <h3 class="animate__animated animate__fadeInDown">
+        <span>Train your model</span>
+      </h3>
+      <div class="train">
+        <div class="wrap">
+          <div>
+            <label for="github">Model name</label>
+            <input
+              id="github"
+              type="text"
+              value="{{model.name}}"
+              class="cool"
+              disabled
+            />
+          </div>
+        </div>
+      </div>
+      <div class="train-model">
+        <h4 class="animate__animated animate__fadeInDown">Summary</h4>
+        <p><strong>Model name :</strong> <em>{{model.name}}</em></p>
+        <p><strong>Training Instances :</strong> {{training}}</p>
+        <p><strong>Test Instances :</strong> {{test}}</p>
+        <p><strong>Validation Instances :</strong> {{valid}}</p>
+        <p><strong>NC :</strong> {{nc}}</p>
+        <p>
+          <strong>Labels :</strong> {% for l in labels %}{{l}}, {% endfor %}
+        </p>
+      </div>
+      <button
+        id="train-object-detection-button"
+        type="button"
+        class="box-button animate__animated animate__fadeInUp scrollto margin-left-100"
+      >
+        Train Model
+      </button>
+      <div>
+        <a
+          href="{% url 'import_obj' %}"
+          style="float: left; margin-top: 70px"
+          class="btn-get-started animate__animated animate__fadeInUp scrollto"
+          >Previous</a
+        >
+
+        <a
+          id="next-button"
+          href="{% url 'test_obj' %}"
+          style="margin-top: 70px"
+          class="btn-get-started animate__animated animate__fadeInUp scrollto"
+          >Next</a
+        >
+      </div>
+    </div>
+    <!-- Training Parameters End -->
+
+    <!-- Traing Progress Bubbles start -->
+    <div class="dots-wrapper" id="dots-wrapper">
+      <span class="circle circle-1"></span>
+      <span class="circle circle-2"></span>
+      <span class="circle circle-3"></span>
+      <span class="circle circle-4"></span>
+      <span class="circle circle-5"></span>
+      <span class="circle circle-6"></span>
+      <span class="circle circle-7"></span>
+      <span class="circle circle-8"></span>
+    </div>
+    <!-- Training Process Bubbles End -->
+  </div>
+</section>
+
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4>Time warning</h4>
+      <span class="close">&times;</span>
+    </div>
+    <div class="modal-body">
+      <p>
+        <em
+          >Training Object Detection Model can take long time and cost too much
+          processing power and money.</em
+        >
+        <br />
+      </p>
+      <br />
+    </div>
+    <div class="modal-footer">
+      <button name="okey" id="okey" type="button">I Understood</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  var modal = document.getElementById("myModal");
+  var button = document.getElementById("okey");
+  var alink = document.getElementById("alink");
+  var span = document.getElementsByClassName("close")[0];
+
+  document
+    .querySelector("#train-object-detection-button")
+    .addEventListener("click", function () {
+      modal.style.display = "block";
+
+      span.onclick = function () {
+        modal.style.display = "none";
+      };
+
+      button.onclick = function () {
+        modal.style.display = "none";
+
+        document.querySelector("#training-parameters").style.display = "None";
+        document.querySelector("#dots-wrapper").style.display = "block";
+        $.ajax({
+          type: "GET",
+          url: "/od/training-ongoing/",
+          datatype: "json",
+          data: {
+            name: "{{model.name}}",
+            csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+          },
+          success: function () {
+            document.querySelector("#dots-wrapper").style.display = "None";
+            document.querySelector("#next-button").click();
+          },
+          error: function () {
+            alert("Paging size is small, pleas clear up some space.");
+          },
+        });
+      };
+    });
+</script>
+
+{% endblock %}

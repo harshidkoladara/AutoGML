@@ -1,0 +1,84 @@
+{% extends 'base.html'%}
+{% block body %}
+
+
+<section id="hero" style="height:30vh;"class="d-flex justify-cntent-center align-items-center"></section>
+
+<br><br>
+  <!-- ======= Portfoio Section ======= -->
+<section id="portfolio" class="portfoio">
+  <div class="container" data-aos="fade-up">
+    <div class="row portfolio-container">
+                  <!-- DEFINE SCHEMA -->
+        <div  class="portfolio-item filter-schema">
+          <form method="post">
+            {% csrf_token %}
+            <div class = "left-wala">
+              <h2 class="animate__animated animate__fadeInDown">Define your schema</h2>
+              <p class="animate__animated animate__fadeInUp">Select a column to be targeted in a case of Supervised Learning. Select a column class like Categorical, Numerical, etc. Select a Name, Address or all other unnecessary columns to nullable so it can't reduce accuracy of model.</p>
+              <div class = "define-schema">
+                <h4 class="animate__animated animate__fadeInUp"><span>Select a target</span></h4>
+                <p class="animate__animated animate__fadeInUp">Select a column to be target what you want to model predict (If you don't select target then model will consider a Unsupervised Learning).</p>
+              </div>
+              <div class="box">
+                <select style="width: auto;height: 45px;" name = 'target'>
+                  <option selected="selected" disabled="disabled" value="none">Select Target</option>
+                  {% for col, dtype in data.items %}
+                    <option {% if target == col %} selected="selected" {% endif %}value ='{{col}}'>{{col}}</option>
+                  {% endfor %}
+                </select>
+              </div>            
+            </div>
+
+            <div class = "right-wala">
+              <table id="t01" >
+                <tr>
+                  <th>Column name</th>
+                  <th>Data type</th> 
+                  <th>Nullability</th>
+                </tr>
+                {% for col, dtype in data.items %}
+                  <tr>
+                      <td>{{col}}</td>
+                      <td>                        
+                        <div class="box">
+                          <select name="drop{{col}}">
+                            <option selected="selected" disabled="disabled" value="none">Select Datatype</option>
+                            <option {% if dtype.0 == 'object'%} selected="selected"{% endif %} value="object">Object</option>
+                            <option {% if dtype.0 == 'int64'%} selected="selected"{% endif %} value="int64">Int64</option>
+                            <option {% if dtype.0 == 'float64'%} selected="selected"{% endif %} value="float64">Float64</option>
+                            <option {% if dtype.0 == 'category'%} selected="selected"{% endif %} value="category">Categorical</option>
+                            <option {% if dtype.0 == 'datetime64[ns]'%} selected="selected"{% endif %} value="datetime64[ns]">DateTime[ns]</option>
+                            <option {% if dtype.0 == 'bool'%} selected="selected"{% endif %} value="bool">Bool</option>
+                            <option {% if dtype.0 == 'timedelta64[ns]'%} selected="selected"{% endif %} value="timedelta64[ns]">TimeDelta64</option>
+                          </select>
+                        </div>    
+                      </td>
+                      <td style="padding-top: 15px;">
+                        <input type="checkbox" id="check{{col}}" {% if dtype.1%}checked="checked"{% endif %} name="check{{col}}" value="{{col}}">
+                        <label for="check{{col}}"> Nullable</label><br>
+                      </td>
+                  </tr>
+                {% endfor %}
+              </table>
+            </div>
+            
+            <button type="submit" style="float:right; margin-right: 3vw;" class="box-verify animate__animated animate__fadeInUp scrollto">Verify</button>
+            <a href="{% url 'imported_table' %}" style="float:left;margin-top:70px;"class="btn-get-started animate__animated animate__fadeInUp scrollto">Previous</a>    
+            <a href="{% url 'analyze_table' %}" style=" margin-top:70px;"class="btn-get-started animate__animated animate__fadeInUp scrollto">Next</a>
+          </form>  
+        </div>      
+                    <br><br><br><br>
+                    <br><br><br><br>
+                    <br><br><br><br>
+                    <br><br><br><br>
+                    <br><br><br><br>
+                    <br><br><br><br>
+                    <br><br><br><br>
+                    <br><br><br><br>
+    </div>
+  </div>
+</section>
+<!-- End Portfoio Section -->
+{% endblock %}
+

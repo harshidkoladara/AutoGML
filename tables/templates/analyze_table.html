@@ -1,0 +1,56 @@
+{% extends 'base.html'%} {% block body %}
+<section
+  id="hero"
+  style="height: 30vh"
+  class="d-flex justify-cntent-center align-items-center"
+></section>
+
+<br /><br />
+<section id="portfolio" class="portfoio">
+  <div class="container" data-aos="fade-up">
+    <div class="portfolio-item filter-analyze">
+      <div>
+        <h2 class="animate__animated animate__fadeInDown">Analyze your data</h2>
+        <table id="t01">
+          <tr>
+            <th>Feature name</th>
+            <th>Type</th>
+            <th>Nullable</th>
+            <th>Missing</th>
+            <th>Distinct values</th>
+            <th>Mean</th>
+            <th>Standard Deviation</th>
+            <th>Correlation</th>
+            <!-- ADD IF OTHER ALSO POSSBLE -->
+          </tr>
+          {% for col, x in analyze.items %}
+          <tr>
+            <td>{{col}}</td>
+            <td><center>{{x.0}}</center></td>
+            <td><center>{{x.1}}</center></td>
+            <td><center>{{x.2}}</center></td>
+            <td><center>{{x.3}}</center></td>
+            <td><center>{{x.4}}</center></td>
+            <td><center>{{x.5}}</center></td>
+            <td><center>{{x.6}}</center></td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+      <br />
+      <a
+        href="{% url 'schema_table' %}"
+        style="float: left"
+        class="btn-get-started animate__animated animate__fadeInUp scrollto"
+        >Previous</a
+      >
+      <a
+        href="{% url 'train_table' %}"
+        class="btn-get-started animate__animated animate__fadeInUp scrollto"
+        >Next</a
+      >
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,771 @@
+{% extends 'base_clf.html'%} {% block body %} {% load static %}
+<style>
+  .inp div.wrap div {
+    position: relative;
+    width: 120%;
+    margin-left: 30px;
+    margin-top: 20px;
+  }
+
+  .inp label {
+    position: absolute;
+    font-weight: 300;
+    top: 0;
+    font-size: 20px;
+    margin: 5px 15px;
+    padding: 1 10px;
+    -webkit-transition: top 0.2s ease-in-out, font-size 0.2s ease-in-out;
+    transition: top 0.2s ease-in-out, font-size 0.2s ease-in-out;
+  }
+
+  .inp .active {
+    top: -25px;
+    font-size: 20px;
+    font-weight: 300;
+    color: #000000;
+    padding: 0px 10px;
+    background-color: white;
+  }
+
+  .inp input[type="text"] {
+    width: 90%;
+    height: 20px;
+    padding: 20px;
+    border: 1.2px solid #3b3535;
+    font-size: 20px;
+    color: #72808c;
+  }
+
+  .inp input[type="text"]:focus {
+    outline: none;
+  }
+
+  .train div.wrap div {
+    position: relative;
+    min-width: 300px;
+    width: 40%;
+    margin: 20px;
+  }
+
+  .train label {
+    position: absolute;
+    top: -25px;
+    font-size: 20px;
+    font-weight: 300;
+    color: #000000;
+    margin: 5px 15px;
+    padding: 0 10px;
+    background-color: white;
+  }
+
+  .train input[type="text"] {
+    width: 90%;
+    height: 20px;
+    padding: 20px;
+    border: 1.2px solid #3b3535;
+    font-size: 20px;
+    color: #72808c;
+  }
+
+  .train input[type="text"]:focus {
+    outline: none;
+  }
+
+  table {
+    margin-bottom: 30px;
+    width: 200%;
+    border-collapse: collapse;
+    box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  th,
+  td {
+    padding: 10px;
+  }
+
+  #t01 tr:nth-child(even) {
+    background-color: #eee;
+  }
+  #t01 tr:nth-child(odd) {
+    background-color: #fff;
+  }
+  #t01 th {
+    background-color: #848484;
+    color: white;
+  }
+
+  .portfolio-item .left-wala {
+    padding: 50px;
+    width: 20%;
+    float: left;
+  }
+
+  .portfolio-item .right-wala {
+    padding-left: 50px;
+    width: 80%;
+    float: right;
+  }
+
+  .column {
+    width: 25%;
+    padding: 5px;
+  }
+
+  /* Clearfix (clear floats) */
+  .row::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+  img {
+    margin: 10px;
+  }
+  .selected {
+    border: solid 2px #0880e8;
+    box-shadow: 0px 12px 22px 1px #333;
+  }
+
+  /* Parent Container */
+  .content_img {
+    position: relative;
+    float: left;
+  }
+
+  /* Child Text Container */
+  .content_img div {
+    position: absolute;
+    bottom: 7vh;
+    background: black;
+    color: white;
+    font-family: sans-serif;
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: visibility 0s, opacity 0.5s linear;
+    transition: visibility 0s, opacity 0.5s linear;
+  }
+
+  /* Hover on Parent Container */
+  .content_img:hover {
+    cursor: pointer;
+  }
+
+  .content_img:hover div {
+    width: 95%;
+    margin-left: 10px;
+    padding: 8px 15px;
+    visibility: visible;
+    opacity: 0.7;
+  }
+
+  .box {
+  }
+
+  .box select:hover {
+    color: #0880e8;
+    box-shadow: 0px 12px 22px 1px #333;
+    background-color: #fafaff;
+  }
+
+  .box select {
+    background-color: #fafaff;
+    color: #444444;
+    padding: 10px;
+    width: 200px;
+    height: 45px;
+    border: 0.2px solid white;
+    border-radius: 2px;
+    font-size: 20px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    -webkit-appearance: button;
+    appearance: button;
+    outline: none;
+  }
+
+  .box select option {
+    padding: 30px;
+  }
+
+  .box-button {
+    background-color: #fafaff;
+    color: #444444;
+    padding: 10px;
+    width: 200px;
+    height: 45px;
+    border: 0.2px solid white;
+    border-radius: 2px;
+    font-size: 20px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    -webkit-appearance: button;
+    appearance: button;
+    outline: none;
+  }
+
+  .box-button:hover {
+    color: #0880e8;
+    box-shadow: 0px 12px 22px 1px #333;
+    background-color: #fafaff;
+  }
+
+  .scroll {
+    width: 60vw;
+    height: 75vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    text-align: justify;
+  }
+</style>
+
+<section
+  style="height: 30vh"
+  id="hero"
+  class="d-flex justify-cntent-center align-items-center"
+></section>
+
+<br /><br />
+<!-- ======= Portfoio Section ======= -->
+<section id="portfolio" class="portfoio">
+  <div class="container" data-aos="fade-up">
+    <div class="row">
+      <div class="col-lg-12 d-flex justify-content-center">
+        <ul id="portfolio-flters">
+          <li data-filter=".filter-import" class="filter-active">Import</li>
+          <li data-filter=".filter-schema">Imags</li>
+          <li data-filter=".filter-train">Train</li>
+          <li data-filter=".filter-evaluate">Evaluate</li>
+          <li data-filter=".filter-predict">Predict</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row portfolio-container">
+      <!-- IMPORT DEVISION -->
+      <div class="portfolio-item filter-import">
+        <h2 class="animate__animated animate__fadeInDown">
+          <span>Import your Images</span>
+        </h2>
+        <p class="animate__animated animate__fadeInUp">
+          <b
+            >To build custom model, you need to import a set of images to train
+            the model.</b
+          >
+          More images are better to generalize and train your model better. Each
+          image you upload shoud be categorized with the label.
+        </p>
+
+        <div class="filters">
+          <div id="import-type-filter">
+            <div class="radio-hk">
+              <input
+                type="radio"
+                id="local"
+                name="import"
+                value=".local"
+                checked=""
+              />
+              <label for="local">Upload images from your computer</label>
+            </div>
+            <div class="radio-hk">
+              <input type="radio" id="drive" name="import" value=".drive" />
+              <label for="drive">Import images from Google Drive</label><br />
+            </div>
+          </div>
+        </div>
+
+        <div class="import-container">
+          <div class="element-item drive">
+            <h2 class="animate__animated animate__fadeInUp">
+              <span>Import images from Google Drive</span>
+            </h2>
+            <p class="animate__animated animate__fadeInUp">
+              Paste google drive shareable link below
+            </p>
+
+            <div class="inp">
+              <div class="wrap">
+                <div>
+                  <label for="drive">https://</label>
+                  <input id="drive" type="text" class="cool" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="element-item local">
+            <h2 class="animate__animated animate__fadeInUp">
+              <span>Upload images from your computer</span>
+            </h2>
+            <p class="animate__animated animate__fadeInUp">
+              Upload JPEG, PNG, ZIP only.
+            </p>
+            <a
+              href="#about"
+              class="box-button animate__animated animate__fadeInUp scrollto"
+              >Select files</a
+            >
+          </div>
+        </div>
+        <a
+          href="#about"
+          class="btn-get-started animate__animated animate__fadeInUp scrollto"
+          >Import</a
+        >
+      </div>
+      <!-- IMPORT DIVISION COMPLATE -->
+
+      <!-- IMAGES -->
+      <div class="portfolio-item filter-schema">
+        <div class="left-wala">
+          <div>
+            <table>
+              <tr>
+                <td>All images</td>
+                <td>100</td>
+              </tr>
+              <tr>
+                <td>Labeled</td>
+                <td>90</td>
+              </tr>
+              <tr>
+                <td>Unlabeled</td>
+                <td>10</td>
+              </tr>
+            </table>
+          </div>
+          <div>
+            <table>
+              <tr>
+                <td>class 1</td>
+                <td>40</td>
+              </tr>
+              <tr>
+                <td>class 2</td>
+                <td>40</td>
+              </tr>
+              <tr>
+                <td>class 3</td>
+                <td>20</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="right-wala">
+          <div style="margin-left: 100px; margin-bottom: 30px" class="row">
+            <div style="margin-left: 30px" class="column">
+              <a
+                href="#about"
+                class="box-button animate__animated animate__fadeInUp scrollto"
+                >Add images</a
+              >
+            </div>
+            <div style="margin-left: 30px" class="column">
+              <a
+                href="#about"
+                class="box-button animate__animated animate__fadeInUp scrollto"
+                >Delete</a
+              >
+            </div>
+            <div style="margin-left: 30px" class="column">
+              <div class="box">
+                <select>
+                  <option selected="selected" disabled="disabled" value="none">
+                    Select class
+                  </option>
+                  <option>Column 1</option>
+                  <option>Column 2</option>
+                  <option>Column 3</option>
+                  <option>Column 4</option>
+                  <option>Column 5</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="scroll">
+            <div style="margin-left: 100px" class="row">
+              <div class="column content_img">
+                <img
+                  src="{% static 'assets/img/portfolio/portfolio-4.jpg' %}"
+                  style="width: 100%"
+                />
+                <div>Image 1 Text</div>
+              </div>
+              <div class="column content_img">
+                <img
+                  src="{% static 'assets/img/portfolio/portfolio-4.jpg' %}"
+                  style="width: 100%"
+                />
+                <div>Image 1 Text</div>
+              </div>
+              <div class="column content_img">
+                <img
+                  src="{% static 'assets/img/portfolio/portfolio-4.jpg' %}"
+                  style="width: 100%"
+                />
+                <div>Image 1 Text</div>
+              </div>
+              <div class="column content_img">
+                <img
+                  src="{% static 'assets/img/portfolio/portfolio-4.jpg' %}"
+                  style="width: 100%"
+                />
+                <div>Image 1 Text</div>
+              </div>
+            </div>
+            <div style="margin-left: 100px" class="row">
+              <div class="column content_img">
+                <img
+                  src="{% static 'assets/img/portfolio/portfolio-3.jpg' %}"
+                  style="width: 100%"
+                />
+                <div>Image 2 Text</div>
+              </div>
+              <div class="column content_img">
+                <img
+                  src="{% static 'assets/img/portfolio/portfolio-3.jpg' %}"
+                  style="width: 100%"
+                />
+                <div>Image 2 Text</div>
+              </div>
+              <div class="column content_img">
+                <img
+                  src="{% static 'assets/img/portfolio/portfolio-3.jpg' %}"
+                  style="width: 100%"
+                />
+                <div>Image 2 Text</div>
+              </div>
+              <div class="column content_img">
+                <img
+                  src="{% static 'assets/img/portfolio/portfolio-3.jpg' %}"
+                  style="width: 100%"
+                />
+                <div>Image 2 Text</div>
+              </div>
+            </div>
+            <div style="margin-left: 100px" class="row">
+              <div class="column content_img">
+                <img
+                  src="{% static 'assets/img/portfolio/portfolio-2.jpg' %}"
+                  style="width: 100%"
+                />
+                <div>Image 3 Text</div>
+              </div>
+              <div class="column content_img">
+                <img
+                  src="{% static 'assets/img/portfolio/portfolio-2.jpg' %}"
+                  style="width: 100%"
+                />
+                <div>Image 3 Text</div>
+              </div>
+              <div class="column content_img">
+                <img
+                  src="{% static 'assets/img/portfolio/portfolio-2.jpg' %}"
+                  style="width: 100%"
+                />
+                <div>Image 3 Text</div>
+              </div>
+              <div class="column content_img">
+                <img
+                  src="{% static 'assets/img/portfolio/portfolio-2.jpg' %}"
+                  style="width: 100%"
+                />
+                <div>Image 3 Text</div>
+              </div>
+            </div>
+            <div style="margin-left: 100px" class="row">
+              <div class="column content_img">
+                <img
+                  src="{% static 'assets/img/portfolio/portfolio-4.jpg' %}"
+                  style="width: 100%"
+                />
+                <div>Image 1 Text</div>
+              </div>
+              <div class="column content_img">
+                <img
+                  src="{% static 'assets/img/portfolio/portfolio-4.jpg' %}"
+                  style="width: 100%"
+                />
+                <div>Image 1 Text</div>
+              </div>
+              <div class="column content_img">
+                <img
+                  src="{% static 'assets/img/portfolio/portfolio-4.jpg' %}"
+                  style="width: 100%"
+                />
+                <div>Image 1 Text</div>
+              </div>
+              <div class="column content_img">
+                <img
+                  src="{% static 'assets/img/portfolio/portfolio-4.jpg' %}"
+                  style="width: 100%"
+                />
+                <div>Image 1 Text</div>
+              </div>
+            </div>
+            <div style="margin-left: 100px" class="row">
+              <div class="column content_img">
+                <img
+                  src="{% static 'assets/img/portfolio/portfolio-3.jpg' %}"
+                  style="width: 100%"
+                />
+                <div>Image 2 Text</div>
+              </div>
+              <div class="column content_img">
+                <img
+                  src="{% static 'assets/img/portfolio/portfolio-3.jpg' %}"
+                  style="width: 100%"
+                />
+                <div>Image 2 Text</div>
+              </div>
+              <div class="column content_img">
+                <img
+                  src="{% static 'assets/img/portfolio/portfolio-3.jpg' %}"
+                  style="width: 100%"
+                />
+                <div>Image 2 Text</div>
+              </div>
+              <div class="column content_img">
+                <img
+                  src="{% static 'assets/img/portfolio/portfolio-3.jpg' %}"
+                  style="width: 100%"
+                />
+                <div>Image 2 Text</div>
+              </div>
+            </div>
+            <div style="margin-left: 100px" class="row">
+              <div class="column content_img">
+                <img
+                  src="{% static 'assets/img/portfolio/portfolio-2.jpg' %}"
+                  style="width: 100%"
+                />
+                <div>Image 3 Text</div>
+              </div>
+              <div class="column content_img">
+                <img
+                  src="{% static 'assets/img/portfolio/portfolio-2.jpg' %}"
+                  style="width: 100%"
+                />
+                <div>Image 3 Text</div>
+              </div>
+              <div class="column content_img">
+                <img
+                  src="{% static 'assets/img/portfolio/portfolio-2.jpg' %}"
+                  style="width: 100%"
+                />
+                <div>Image 3 Text</div>
+              </div>
+              <div class="column content_img">
+                <img
+                  src="{% static 'assets/img/portfolio/portfolio-2.jpg' %}"
+                  style="width: 100%"
+                />
+                <div>Image 3 Text</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a
+          href="#about"
+          class="btn-get-started animate__animated animate__fadeInUp scrollto"
+          >Next</a
+        >
+      </div>
+      <!-- SCHEMA COMPLATE -->
+
+      <!-- ANALYZE YOUR DATA COMPLETE -->
+      <div class="portfolio-item filter-train">
+        <h2 class="animate__animated animate__fadeInDown">
+          <span>Train your model</span>
+        </h2>
+        <div class="train">
+          <div class="wrap">
+            <div>
+              <label for="github">Model name</label>
+              <input id="github" type="text" value="Model Name" class="cool" />
+            </div>
+          </div>
+        </div>
+        <div class="train-model">
+          <h4 class="animate__animated animate__fadeInDown">
+            <span>Summary</span>
+          </h4>
+          <p class="animate__animated animate__fadeInUp">
+            &nbsp&nbsp&nbsp Model name : ****
+          </p>
+          <p class="animate__animated animate__fadeInUp">
+            &nbsp&nbsp&nbsp Training images : ****
+          </p>
+          <p class="animate__animated animate__fadeInUp">
+            &nbsp&nbsp&nbsp Analyze images : ****
+          </p>
+          <p class="animate__animated animate__fadeInUp">
+            &nbsp&nbsp&nbsp Test images : ****
+          </p>
+        </div>
+        <div class="train-model">
+          <h4 class="animate__animated animate__fadeInDown">
+            <span>Classes</span>
+          </h4>
+          <p class="animate__animated animate__fadeInUp">
+            &nbsp&nbsp&nbsp Class 1 : 100
+          </p>
+          <p class="animate__animated animate__fadeInUp">
+            &nbsp&nbsp&nbsp Class 2 : 50
+          </p>
+          <p class="animate__animated animate__fadeInUp">
+            &nbsp&nbsp&nbsp Class 3 : 49
+          </p>
+        </div>
+        <!-- ADD ADVANCED OPTION HEAR FOR MORE SPECIFICATION -->
+        <a
+          style="float: right"
+          href="#about"
+          class="btn-get-started animate__animated animate__fadeInUp scrollto"
+          >Train Model</a
+        >
+      </div>
+
+      <!-- EVALUATION -->
+      <div class="portfolio-item filter-evaluate">
+        THE ALL EVALUATION GRAPHS DATA ARE SHOWN HERE AND WILL BE IMPLEMENTED
+        WITH BACKEND
+        <a
+          href="#about"
+          class="btn-get-started animate__animated animate__fadeInUp scrollto"
+          >Next</a
+        >
+      </div>
+
+      <!-- PREICTION  -->
+      <div class="portfolio-item filter-predict">
+        <div style="margin-left: 110vw"></div>
+        <h2 class="animate__animated animate__fadeInDown">
+          <span>Predict</span>
+        </h2>
+        <p class="animate__animated animate__fadeInUp">
+          Predict the results with your custom Machine Learning model.
+        </p>
+
+        <div class="exportFilters">
+          <div id="export-type-filter">
+            <div class="radio-ehk">
+              <input
+                type="radio"
+                id="export"
+                name="exportModel"
+                value=".export"
+                checked=""
+              />
+              <label for="export">Export your model</label><br />
+            </div>
+            <div class="radio-ehk">
+              <input
+                type="radio"
+                id="batch"
+                name="exportModel"
+                value=".batch"
+              />
+              <label for="batch">Batch Prediction </label><br />
+            </div>
+            <div class="radio-ehk">
+              <input
+                type="radio"
+                id="online"
+                name="exportModel"
+                value=".online"
+              />
+              <label for="online">Online Prediction</label><br />
+            </div>
+          </div>
+        </div>
+
+        <div class="export-container">
+          <div class="exportElement-item export">
+            <h2 class="animate__animated animate__fadeInUp">
+              <span>Export model</span>
+            </h2>
+            <p class="animate__animated animate__fadeInUp">
+              Download your custom Machine Learning model and use it to your
+              system to make predictions.
+            </p>
+            <a
+              href="#about"
+              class="btn-get-started animate__animated animate__fadeInUp scrollto"
+              >Download model</a
+            >
+            <br /><br /><br />
+            <a
+              href="#about"
+              class="btn-get-started animate__animated animate__fadeInUp scrollto"
+              >Done</a
+            >
+          </div>
+
+          <div class="exportElement-item batch">
+            <h2 class="animate__animated animate__fadeInUp">
+              <span>Batch prediction</span>
+            </h2>
+            <p class="animate__animated animate__fadeInUp">
+              Make prediction on your limited data with your custom Machine
+              Learning model by uploading images from your computer.
+            </p>
+            <p class="animate__animated animate__fadeInUp">
+              Upload JPEG, PNG, ZIP only.
+            </p>
+            <a
+              href="#about"
+              style="margin-left: 20px"
+              class="box-button animate__animated animate__fadeInUp scrollto"
+              >Select files</a
+            >
+
+            <br /><br /><br />
+            <a
+              href="#about"
+              class="btn-get-started animate__animated animate__fadeInUp scrollto"
+              >Predict</a
+            >
+            <br /><br />
+            <a
+              href="#about"
+              class="btn-get-started animate__animated animate__fadeInUp scrollto"
+              >Done</a
+            >
+          </div>
+
+          <div class="exportElement-item online">
+            <p>Prediction with API and will be implement with backend.</p>
+            <a
+              href="#about"
+              class="btn-get-started animate__animated animate__fadeInUp scrollto"
+              >Done</a
+            >
+          </div>
+        </div>
+
+        <br /><br /><br /><br />
+        <br /><br /><br /><br />
+        <br /><br /><br /><br />
+        <br /><br /><br /><br />
+        <br /><br /><br /><br />
+        <br /><br /><br /><br />
+        <br /><br /><br /><br />
+        <br /><br /><br /><br />
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Portfoio Section -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+  $("img").click(function () {
+    //New Code replaced here
+    $(this).toggleClass("selected");
+  });
+</script>
+
+{% endblock %}

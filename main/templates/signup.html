@@ -1,0 +1,333 @@
+{% extends 'base.html'%}
+{% block title %}AutoGML{% endblock %}
+{% block body %}
+{% load static %}
+
+<style>
+
+.background-login{
+	top: 50vh;
+	align-content: center;
+	margin: auto;
+	left: 30%;
+	position: absolute;
+	background-color: white;
+	box-shadow: 0px 12px 22px 1px #333;
+	border-radius: 20px;
+	width: 40%;
+	height: auto;
+	padding: 50px;
+
+}
+
+.inp div.wrap div {
+  position: relative;
+  width: 100%;
+  margin-left: 20px;
+}
+
+.inp label {
+  position: absolute;
+  font-weight: 100;
+  top: 0;
+  font-size: 20px;
+  margin: 5px 15px;
+  padding: 1 10px;
+  -webkit-transition: top .2s ease-in-out, 
+                      font-size .2s ease-in-out;
+  transition: top .2s ease-in-out, 
+              font-size .2s ease-in-out;
+}
+
+.inp .active {
+  top: -16px;
+  font-size: 14px;
+  font-weight: 300;
+  color: #0880e8; 
+  padding: 0px 7px;
+  background-color: white;
+}
+
+
+.inp input[type=text] {
+  width: 90%;
+  height: 20px;
+  padding: 20px;
+  margin-bottom: 1px;
+  border: 1.2px solid #3b3535;
+  border-radius: 4px;
+  font-size: 20px;
+  color: #72808c;
+} 
+
+.inp input[type=text]:focus {
+  outline: none;
+  border: 2px solid #0880e8;
+}
+
+.inp input[type=password] {
+  width: 90%;
+  height: 20px;
+  padding: 20px;
+  margin-bottom: 1px;
+  border: 1.2px solid #3b3535;
+  border-radius: 4px;
+  font-size: 20px;
+  color: #72808c;
+} 
+
+.inp input[type=password]:focus {
+  outline: none;
+  border: 2px solid #0880e8;
+}
+
+.inp input[type=email] {
+  width: 90%;
+  height: 20px;
+  padding: 20px;
+  margin-bottom: 1px;
+  border: 1.2px solid #3b3535;
+  border-radius: 4px;
+  font-size: 20px;
+  color: #72808c;
+} 
+
+.inp input[type=email]:focus {
+  outline: none;
+  border: 2px solid #0880e8;
+}
+
+.inp input[type=tel] {
+  width: 90%;
+  height: 20px;
+  padding: 20px;
+  margin-bottom: 1px;
+  border: 1.2px solid #3b3535;
+  border-radius: 4px;
+  font-size: 20px;
+  color: #72808c;
+} 
+
+.inp input[type=tel]:focus {
+  outline: none;
+  border: 2px solid #0880e8;
+}
+
+.btn-get-started {
+  font-family: "Raleway", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  float: right;
+  margin: 30px;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 12px 32px;
+  border-radius: 50px;
+  transition: 0.5s;
+  line-height: 1;
+  color: #0880e8;
+  background-color: white;
+  -webkit-animation-delay: 0.8s;
+  animation-delay: 0.8s;
+  border: 2px solid #0880e8;
+}
+
+.btn-get-started:hover {
+  background: #0880e8;
+  color: #fff;
+  text-decoration: none;
+}
+
+
+.field-icon {
+  float: right;
+  margin-left: -25px;
+  margin-top: -25px;
+  position: relative;
+  z-index: 2;
+}
+
+.column {
+}
+
+/* Clearfix (clear floats) */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+</style>
+
+
+<section id="hero" class=" justify-cntent-center align-items-center"></section>
+	
+	<div class="background-login">
+      <form method="post">
+        {% csrf_token %}  
+		    <div id = "signin" class="container" data-aos="zoom-in" data-aos-delay="100">         
+  		    	<img src="{% static 'assets/images/logo2.png' %}" alt="AutoGML" style="height: 7.8rem; margin-right: auto; margin-left: auto; display: block;">
+  		      	<h2 style="text-align: center;">Create new account</h2>
+              <div class = "row" style="margin-top: 20px;">
+  		      	    <div class = "inp column" style="float: left; margin-left: 3.5%; width: 44.1%;">
+                      <div class="wrap">
+                          <div>
+                              <label for="fname">First name</label>
+                              <input id="fname" name = "fname" type="text" class="cool" autocomplete="off" required/>
+                          </div>
+                      </div>
+                  </div>
+                  <div class = "inp column" style="float:right; width:44.1%; ">
+                      <div class="wrap">
+                          <div>
+                              <label for="lname">Last name</label>
+                              <input id="lname" name = "lname" type="text" class="cool" autocomplete="off" required/>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+                <div class = "inp" style="margin-top: 20px;">
+                      <div class="wrap">
+                          <div style="width:100%">
+                              <label for="email">Email</label>
+                              <input id="email" name = "email" type="email" class="cool" autocomplete="off" required/>
+                          </div>
+                      </div>
+                  </div>
+                  <div class = "inp" style="margin-top: 20px;">
+                      <div class="wrap">
+                          <div style="width:100%">
+                              <label for="contact">Contact</label>
+                              <input id="contact" name = "contact" type="tel" pattern="[0-9]{10}" oninvalid="this.setCustomValidity('Please Enter Valid 10 Digit Contact Number')" class="cool" autocomplete="off" required/>
+                          </div>
+                      </div>
+                  </div>
+                  <div class = "row" style="margin-top: 20px;">
+                    <div class = "inp column" style="float: left; margin-left: 3.5%; width: 44.1%;">
+                        <div class="wrap">
+                            <div>
+                                <label for="password">Password</label>
+                                <input id="password" name = "password" type="password" class="cool" autocomplete="off" pattern="^\S{8,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Must have at least 8 characters' : ''); if(this.checkValidity()) form.confirm.pattern = this.value;" required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class = "inp column" style="float:right; width:44.1%; ">
+                        <div class="wrap">
+                            <div>
+                                <label for="confirm">Confirm</label>
+                                <input id="confirm" name = "confirm" type="password" class="cool" autocomplete="off" pattern="^\S{8,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');" required/>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+            {% if error %}
+              <p style="margin-top:5px;margin-left:10px;color:red;">{{error}}</p>
+            {% endif %}  
+      <button type="submit" class = "btn-get-started animate__animated animate__fadeInUp scrollto">Create</button>
+      </form> 
+			<!-- <a href="{% url 'confirmation' %}" class="btn-get-started animate__animated animate__fadeInUp scrollto">Create</a> -->
+	</div>
+
+    <br><br><br><br>
+    <br><br><br><br>
+    <br><br><br><br>
+    <br><br><br><br>
+    <br><br><br><br>
+    <br><br><br><br>
+    <br><br>
+
+    <script >
+      $(".toggle-password").click(function() {
+
+      $(this).toggleClass("fa-eye fa-eye-slash");
+      var input = $($(this).attr("toggle"));
+      if (input.attr("type") == "password") {
+        input.attr("type", "text");
+      } else {
+        input.attr("type", "password");
+      }
+    });
+    </script>
+
+    
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCipR5sRr_wSEOzIIc8JmuE6Yx5DNVIDdk",
+    authDomain: "autogml.firebaseapp.com",
+    databaseURL: "https://autogml.firebaseio.com",
+    projectId: "autogml",
+    storageBucket: "autogml.appspot.com",
+    messagingSenderId: "687199245402",
+    appId: "1:687199245402:web:db2a6776bb0ddd2436f463",
+    measurementId: "G-315YQVVGGV"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+
+<script type="text/javascript">
+  window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
+        "recaptcha-container",
+        {
+          size: "normal",
+          callback: function(response) {
+            submitPhoneNumberAuth();
+          }
+        }
+      );
+
+      // This function runs when the 'sign-in-button' is clicked
+      // Takes the value from the 'phoneNumber' input and sends SMS to that phone number
+      function submitPhoneNumberAuth() {
+        var phoneNumber = document.getElementById("contact").value;
+        var appVerifier = window.recaptchaVerifier;
+        firebase
+          .auth()
+          .signInWithPhoneNumber("+91" + phoneNumber, appVerifier)
+          .then(function(confirmationResult) {
+            window.confirmationResult = confirmationResult;
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      }
+
+      // This function runs when the 'confirm-code' button is clicked
+      // Takes the value from the 'code' input and submits the code to verify the phone number
+      // Return a user object if the authentication was successful, and auth is complete
+      function submitPhoneNumberAuthCode() {
+        var code = document.getElementById("code").value;
+        confirmationResult
+          .confirm(code)
+          .then(function(result) {
+            var user = result.user;
+            console.log(user);
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      }
+
+      //This function runs everytime the auth state changes. Use to verify if the user is logged in
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          console.log("USER LOGGED IN");
+        } else {
+          // No user is signed in.
+          console.log("USER NOT LOGGED IN");
+        }
+      });
+  </script>
+
+{% endblock %}

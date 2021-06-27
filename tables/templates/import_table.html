@@ -1,0 +1,166 @@
+{% extends 'base.html'%} {% block body %}
+<section
+  id="hero"
+  style="height: 30vh"
+  class="d-flex justify-cntent-center align-items-center"
+></section>
+
+<br /><br />
+<!-- ======= Portfoio Section ======= -->
+<section id="portfolio" class="portfoio">
+  <div class="container" data-aos="fade-up">
+    <div class="row portfolio-container">
+      <div class="portfolio-item filter-import">
+        <h2 class="animate__animated animate__fadeInDown">
+          <span>Import your data</span>
+        </h2>
+        <p class="animate__animated animate__fadeInUp">
+          AutoGML Tables uses tabular data that you import to train your custom
+          Machine Learning model. Your dataset must contain atleast one input
+          feature column and a target column for Supervised Learning. AutoGML
+          can make change into your dataset like data split, standerization, etc
+          for make it appropriate.
+        </p>
+
+        <div class="filters">
+          <div id="import-type-filter">
+            <div class="radio-hk">
+              <input
+                type="radio"
+                id="github"
+                name="import"
+                value=".github"
+                checked=""
+              />
+              <label for="github">Import dataset from GitHub</label><br />
+            </div>
+            <div class="radio-hk">
+              <input type="radio" id="local" name="import" value=".local" />
+              <label for="local">Upload dataset from your computer</label><br />
+            </div>
+          </div>
+        </div>
+
+        <div class="import-container">
+          <div class="element-item github">
+            <form method="post">
+              {% csrf_token %}
+              <h2 class="animate__animated animate__fadeInUp">
+                <span>Import CSV from GitHub</span>
+              </h2>
+              <p class="animate__animated animate__fadeInUp">
+                It is possible to upload a CSV file is from your GitHub
+                repository. Click on the dataset in your repository, then click
+                on View Raw. Copy the link to the raw dataset and paste in below
+                box.
+              </p>
+              <div class="inp">
+                <div class="wrap">
+                  <div>
+                    <label for="github">Github</label>
+                    <input
+                      id="github"
+                      name="github"
+                      type="text"
+                      class="cool"
+                      required=""
+                    />
+                  </div>
+                </div>
+              </div>
+              <button
+                name="github-import"
+                type="submit"
+                value="github"
+                style="margin-left: 16vw"
+                class="box-button animate__animated animate__fadeInUp scrollto"
+              >
+                Import
+              </button>
+            </form>
+          </div>
+
+          <div class="element-item local">
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <h2 class="animate__animated animate__fadeInUp">
+                <span>Upload dataset from your computer</span>
+              </h2>
+              <p class="animate__animated animate__fadeInUp">
+                Select CSV file from your local system.
+              </p>
+              <input
+                type="file"
+                accept=".xlsx, .xls, .csv, .tsv"
+                name="local"
+                id="local_import"
+                required=""
+              />
+              <br />
+              <button
+                type="submit"
+                value="local"
+                name="local-import"
+                style="margin-left: 10vw; margin-top: 10px"
+                class="box-button animate__animated animate__fadeInUp scrollto"
+              >
+                Import
+              </button>
+            </form>
+          </div>
+        </div>
+        {% if error %}
+        <p class="animate__animated animate__fadeInUp" style="color: red">
+          {{error}}
+        </p>
+        {% endif %}
+        <a
+          href="{% url 'schema_table' %}"
+          class="btn-get-started animate__animated animate__fadeInUp scrollto"
+          >Next</a
+        >
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4>Data Uploaded</h4>
+      <span class="close">&times;</span>
+    </div>
+    <div class="modal-body">
+      <p>
+        <em>The dataset uploaded successfully.</em>
+        <br />
+      </p>
+      <br />
+    </div>
+    <div class="modal-footer">
+      <button name="okey" id="okey" type="button">Okey</button>
+    </div>
+  </div>
+</div>
+
+<!-- End Portfoio Section -->
+
+<script>
+  var modal = document.getElementById("myModal");
+  var button = document.getElementById("okey");
+  var alink = document.getElementById("alink");
+  var span = document.getElementsByClassName("close")[0];
+  if ("{{uploaded}}" === "True") {
+    modal.style.display = "block";
+  }
+  span.onclick = function () {
+    modal.style.display = "none";
+    // alink.click();
+  };
+  button.onclick = function () {
+    modal.style.display = "none";
+    // alink.click();
+  };
+</script>
+
+{% endblock %}

@@ -1,0 +1,707 @@
+{% extends 'base.html'%} {% block body %}
+<style>
+  .inp div.wrap div {
+    position: relative;
+    width: 40%;
+    margin: 20px;
+  }
+
+  .inp label {
+    position: absolute;
+    font-weight: 300;
+    top: 0;
+    font-size: 20px;
+    margin: 5px 15px;
+    padding: 1 10px;
+    -webkit-transition: top 0.2s ease-in-out, font-size 0.2s ease-in-out;
+    transition: top 0.2s ease-in-out, font-size 0.2s ease-in-out;
+  }
+
+  .inp .active {
+    top: -25px;
+    font-size: 20px;
+    font-weight: 300;
+    color: #000000;
+    padding: 0px 10px;
+    background-color: white;
+  }
+
+  .inp input[type="text"] {
+    width: 90%;
+    height: 20px;
+    padding: 20px;
+    border: 1.2px solid #3b3535;
+    font-size: 20px;
+    color: #72808c;
+  }
+
+  .inp input[type="text"]:focus {
+    outline: none;
+  }
+
+  table {
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+    box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  th,
+  td {
+    padding: 10px;
+  }
+
+  #t01 tr:nth-child(even) {
+    background-color: #eee;
+  }
+  #t01 tr:nth-child(odd) {
+    background-color: #fff;
+  }
+  #t01 th {
+    background-color: #848484;
+    color: white;
+  }
+
+  /*TOGGLE*/
+
+  .toggle label {
+    pointer-events: none;
+  }
+  .toggle label .input {
+    display: none;
+  }
+  .toggle label .input:checked + .toggle-wrapper {
+    box-shadow: 0 8px 14px 0 rgba(18, 51, 215, 0.12);
+  }
+  .toggle label .input:checked + .toggle-wrapper > .selector {
+    left: calc(100% - 50px);
+    background-color: #0880e8;
+  }
+  .toggle label .input:checked ~ .notification > .selected:before {
+    content: "Yes";
+  }
+  .toggle label .toggle-wrapper {
+    position: relative;
+    width: 100px;
+    height: 40px;
+    background-color: #eaeaea;
+    border: 1px solid white;
+    border-radius: 999px;
+    margin: auto;
+    cursor: pointer;
+    pointer-events: all;
+    box-shadow: 0 8px 14px 0 rgba(215, 60, 18, 0.12);
+  }
+  .toggle label .toggle-wrapper .selector {
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    background-color: #919e9d;
+    transition: left 0.25s ease;
+    border-radius: 50%;
+  }
+  .toggle label .notification {
+    font-size: 20px;
+    width: 100%;
+  }
+  .toggle label .notification .selected:before {
+    content: "No";
+    font-size: 10px;
+    border-bottom: 2px solid;
+  }
+
+  .portfolio-item .left-wala {
+    padding: 50px;
+    width: 50%;
+    float: left;
+  }
+
+  .portfolio-item .right-wala {
+    padding: 50px;
+    width: 50%;
+    float: right;
+  }
+
+  .box {
+    position: relative;
+  }
+
+  .box select {
+    background-color: #fafaff;
+    color: #444444;
+    padding: 12px;
+    width: 250px;
+    border: 0.2px solid white;
+    font-size: 20px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    -webkit-appearance: button;
+    appearance: button;
+    outline: none;
+  }
+
+  .box::before {
+    content: "\f13a";
+    font-family: FontAwesome;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20%;
+    height: 100%;
+    text-align: center;
+    font-size: 28px;
+    line-height: 45px;
+    color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    pointer-events: none;
+  }
+
+  .box:hover::before {
+    color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .box select option {
+    padding: 30px;
+  }
+
+  .train div.wrap div {
+    position: relative;
+    min-width: 300px;
+    width: 40%;
+    margin: 20px;
+  }
+
+  .train label {
+    position: absolute;
+    top: -25px;
+    font-size: 20px;
+    font-weight: 300;
+    color: #000000;
+    margin: 5px 15px;
+    padding: 0 10px;
+    background-color: white;
+  }
+
+  .train input[type="text"] {
+    width: 90%;
+    height: 20px;
+    padding: 20px;
+    border: 1.2px solid #3b3535;
+    font-size: 20px;
+    color: #72808c;
+  }
+
+  .train input[type="text"]:focus {
+    outline: none;
+  }
+
+  .portfoio .portfolio-item .train-model h4 {
+    margin-top: 30px;
+    font-size: 18px;
+    color: #444444;
+    font-weight: 600;
+  }
+
+  .portfoio .portfolio-item .train-model p {
+    margin-top: 10px;
+    color: #444444;
+    font-size: 14px;
+    margin-bottom: 0;
+  }
+</style>
+
+<section
+  id="hero"
+  style="height: 30vh"
+  class="d-flex justify-cntent-center align-items-center"
+></section>
+
+<br /><br />
+<!-- ======= Portfoio Section ======= -->
+<section id="portfolio" class="portfoio">
+  <div class="container" data-aos="fade-up">
+    <div class="row">
+      <div class="col-lg-12 d-flex justify-content-center">
+        <ul id="portfolio-flters">
+          <li data-filter=".filter-import" class="filmol">Import</li>
+          <li data-filter=".filter-schema" class="filmol filter-active">
+            Schema
+          </li>
+          <li data-filter=".filter-analyze" class="filmol">Analyze</li>
+          <li data-filter=".filter-train" class="filmol">Train</li>
+          <li data-filter=".filter-evaluate" class="filmol">Evaluate</li>
+          <li data-filter=".filter-predict" class="filmol">Predict</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row portfolio-container">
+      <!-- IMPORT DEVISION -->
+      <div class="portfolio-item filter-import">
+        <h2 class="animate__animated animate__fadeInDown">
+          <span>Import your data</span>
+        </h2>
+        <p class="animate__animated animate__fadeInUp">
+          AutoGML Tables uses tabular data that you import to train your custom
+          Machine Learning model. Your dataset must contain atleast one input
+          feature column and a target column for Supervised Learning. AutoGML
+          can make change into your dataset like data split, standerization, etc
+          for make it appropriate.
+        </p>
+
+        <div class="filters">
+          <div id="import-type-filter">
+            <div class="radio-hk">
+              <input type="radio" id="igithub" name="import" value=".igithub" />
+              <label for="igithub">Import dataset from GitHub</label><br />
+            </div>
+            <div class="radio-hk">
+              <input type="radio" id="ilocal" name="import" value=".ilocal" />
+              <label for="ilocal">Upload dataset from your computer</label
+              ><br />
+            </div>
+          </div>
+        </div>
+
+        <div class="import-container">
+          <div class="element-item igithub">
+            <h2 class="animate__animated animate__fadeInUp">
+              <span>Import CSV from GitHub</span>
+            </h2>
+            <p class="animate__animated animate__fadeInUp">
+              It is possible to upload a CSV file is from your GitHub
+              repository. Click on the dataset in your repository, then click on
+              View Raw. Copy the link to the raw dataset and paste in below box.
+            </p>
+
+            <div class="inp">
+              <div class="wrap">
+                <div>
+                  <label for="igithub">Github</label>
+                  <input id="igithub" type="text" class="cool" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="element-item ilocal">
+            <h2 class="animate__animated animate__fadeInUp">
+              <span>Upload dataset from your computer</span>
+            </h2>
+            <p class="animate__animated animate__fadeInUp">
+              Select CSV file from your local system.
+            </p>
+            <a
+              href="#about"
+              class="btn-get-started animate__animated animate__fadeInUp scrollto"
+              >Upload File</a
+            >
+          </div>
+        </div>
+        <a
+          href="#about"
+          class="btn-get-started animate__animated animate__fadeInUp scrollto"
+          >Import</a
+        >
+      </div>
+      <!-- IMPORT DIVISION COMPLATE -->
+
+      <!-- DEFINE SCHEMA -->
+      <div class="portfolio-item filter-schema">
+        <div class="left-wala">
+          <h2 class="animate__animated animate__fadeInDown">
+            Define your schema
+          </h2>
+          <p class="animate__animated animate__fadeInUp">
+            Select a column to be targeted in a case of Supervised Learning.
+            Select a column class like Categorical, Numerical, etc. Select a
+            Name, Address or all other unnecessary columns to nullable so it
+            can't reduce accuracy of model.
+          </p>
+          <div class="define-schema">
+            <h4 class="animate__animated animate__fadeInUp">
+              <span>Select a target</span>
+            </h4>
+            <p class="animate__animated animate__fadeInUp">
+              Select a column to be target what you want to model predict (If
+              you don't select target then model will consider a Unsupervised
+              Learning).
+            </p>
+          </div>
+          <p class="animate__animated animate__fadeInUp">Target column</p>
+          <div class="box">
+            <select>
+              <option>Column 1</option>
+              <option>Column 2</option>
+              <option>Column 3</option>
+              <option>Column 4</option>
+              <option>Column 5</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="right-wala">
+          <table id="t01">
+            <tr>
+              <th>Column name</th>
+              <th>Data type</th>
+              <th>Nullability</th>
+            </tr>
+            <tr>
+              <td>Column 1</td>
+              <td>
+                <div class="box">
+                  <select>
+                    <option>Column 1</option>
+                    <option>Column 2</option>
+                    <option>Column 3</option>
+                    <option>Column 4</option>
+                    <option>Column 5</option>
+                  </select>
+                </div>
+              </td>
+              <td>
+                <div class="toggle">
+                  <label for="toggle">
+                    <input class="input" id="toggle" type="checkbox" />
+                    <div class="toggle-wrapper">
+                      <span class="selector"></span>
+                    </div>
+                    <!-- <p class="notification">You have selected <span class="selected"></span></p> -->
+                  </label>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Column 1</td>
+              <td>
+                <div class="box">
+                  <select>
+                    <option>Column 1</option>
+                    <option>Column 2</option>
+                    <option>Column 3</option>
+                    <option>Column 4</option>
+                    <option>Column 5</option>
+                  </select>
+                </div>
+              </td>
+              <td>
+                <div class="toggle">
+                  <label for="toggle">
+                    <input class="input" id="toggle" type="checkbox" />
+                    <div class="toggle-wrapper">
+                      <span class="selector"></span>
+                    </div>
+                    <!-- <p class="notification">You have selected <span class="selected"></span></p> -->
+                  </label>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>Column 1</td>
+              <td>
+                <div class="box">
+                  <select>
+                    <option>Column 1</option>
+                    <option>Column 2</option>
+                    <option>Column 3</option>
+                    <option>Column 4</option>
+                    <option>Column 5</option>
+                  </select>
+                </div>
+              </td>
+              <td>
+                <div class="toggle">
+                  <label for="toggle">
+                    <input class="input" id="toggle" type="checkbox" />
+                    <div class="toggle-wrapper">
+                      <span class="selector"></span>
+                    </div>
+                    <!-- <p class="notification">You have selected <span class="selected"></span></p> -->
+                  </label>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <a
+          href="#about"
+          class="btn-get-started animate__animated animate__fadeInUp scrollto"
+          >Next</a
+        >
+      </div>
+      <!-- SCHEMA COMPLATE -->
+
+      <!-- ANALYZE YOUR DATA START -->
+      <div class="portfolio-item filter-analyze">
+        <div>
+          <h2 class="animate__animated animate__fadeInDown">
+            Analyze your data
+          </h2>
+          <table id="t01">
+            <tr>
+              <th>Feature name</th>
+              <th>Type</th>
+              <th>Nullable</th>
+              <th>Missing</th>
+              <th>Distinct values</th>
+              <th>Correletion with target</th>
+              <th>Mean</th>
+              <th>Standard Deviation</th>
+              <!-- ADD IF OTHER ALSO POSSBLE -->
+            </tr>
+            <tr>
+              <td>Column 1</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Column 1</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Column 1</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+        <br />
+        <a
+          href="#about"
+          class="btn-get-started animate__animated animate__fadeInUp scrollto"
+          >Next</a
+        >
+      </div>
+
+      <!-- ANALYZE YOUR DATA COMPLETE -->
+
+      <div class="portfolio-item filter-train">
+        <h2 class="animate__animated animate__fadeInDown">
+          <span>Train your model</span>
+        </h2>
+        <div class="train">
+          <div class="wrap">
+            <div>
+              <label for="github">Model name</label>
+              <input id="github" type="text" value="Model Name" class="cool" />
+            </div>
+          </div>
+        </div>
+        <div class="train-model">
+          <h4 class="animate__animated animate__fadeInDown">
+            <span>Summary</span>
+          </h4>
+          <p class="animate__animated animate__fadeInUp">Model name : ****</p>
+          <p class="animate__animated animate__fadeInUp">Data split : ****</p>
+          <p class="animate__animated animate__fadeInUp">Target : ****</p>
+          <p class="animate__animated animate__fadeInUp">
+            Input features : ****
+          </p>
+          <p class="animate__animated animate__fadeInUp">Target : ****</p>
+        </div>
+        <!-- ADD ADVANCED OPTION HEAR FOR MORE SPECIFICATION -->
+        <a
+          href="#about"
+          class="btn-get-started animate__animated animate__fadeInUp scrollto"
+          >Train Model</a
+        >
+      </div>
+
+      <!-- EVALUATION -->
+      <div class="portfolio-item filter-evaluate">
+        THE ALL EVALUATION GRAPHS DATA ARE SHOWN HERE AND WILL BE IMPLEMENTED
+        WITH BACKEND
+        <a
+          href="#about"
+          class="btn-get-started animate__animated animate__fadeInUp scrollto"
+          >Next</a
+        >
+      </div>
+
+      <!-- PREICTION  -->
+      <div class="portfolio-item filter-predict">
+        <div style="margin-left: 110vw"></div>
+        <h2 class="animate__animated animate__fadeInDown">
+          <span>Predict</span>
+        </h2>
+        <p class="animate__animated animate__fadeInUp">
+          Predict the results with your custom Machine Learning model.
+        </p>
+
+        <div class="exportFilters">
+          <div id="export-type-filter">
+            <div class="radio-ehk">
+              <input
+                type="radio"
+                id="export"
+                name="exportModel"
+                value=".export"
+                checked=""
+              />
+              <label for="export">Export your model</label><br />
+            </div>
+            <div class="radio-ehk">
+              <input
+                type="radio"
+                id="batch"
+                name="exportModel"
+                value=".batch"
+              />
+              <label for="batch">Batch Prediction </label><br />
+            </div>
+            <div class="radio-ehk">
+              <input
+                type="radio"
+                id="online"
+                name="exportModel"
+                value=".online"
+              />
+              <label for="online">Online Prediction</label><br />
+            </div>
+          </div>
+        </div>
+
+        <div class="export-container">
+          <div class="exportElement-item export">
+            <h2 class="animate__animated animate__fadeInUp">
+              <span>Export model</span>
+            </h2>
+            <p class="animate__animated animate__fadeInUp">
+              Download your custom Machine Learning model and use it to your
+              system to make predictions.
+            </p>
+            <a
+              href="#about"
+              class="btn-get-started animate__animated animate__fadeInUp scrollto"
+              >Download model</a
+            >
+            <br /><br /><br />
+            <a
+              href="#about"
+              class="btn-get-started animate__animated animate__fadeInUp scrollto"
+              >Done</a
+            >
+          </div>
+
+          <div class="exportElement-item batch">
+            <h2 class="animate__animated animate__fadeInUp">
+              <span>Batch prediction</span>
+            </h2>
+            <p class="animate__animated animate__fadeInUp">
+              Make prediction on your limited data with your custom Machine
+              Learning model.
+            </p>
+
+            <div id="import-type-filter">
+              <div class="radio-hk">
+                <input
+                  type="radio"
+                  id="github"
+                  name="import"
+                  value=".github"
+                  checked=""
+                />
+                <label for="github">Import dataset from GitHub</label><br />
+              </div>
+              <div class="element-item github">
+                <h2 class="animate__animated animate__fadeInUp">
+                  <span>Import CSV from GitHub</span>
+                </h2>
+                <p class="animate__animated animate__fadeInUp">
+                  It is possible to upload a CSV file is from your GitHub
+                  repository. Click on the dataset in your repository, then
+                  click on View Raw. Copy the link to the raw dataset and paste
+                  in below box.
+                </p>
+                <div class="inp">
+                  <div class="wrap">
+                    <div>
+                      <label for="github">Github</label>
+                      <input id="github" type="text" class="cool" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="radio-hk">
+                <input type="radio" id="local" name="import" value=".local" />
+                <label for="local">Upload dataset from your computer</label
+                ><br />
+              </div>
+              <div class="element-item local">
+                <h2 class="animate__animated animate__fadeInUp">
+                  <span>Upload dataset from your computer</span>
+                </h2>
+                <p class="animate__animated animate__fadeInUp">
+                  Select CSV file from your local system.
+                </p>
+                <a
+                  href="#about"
+                  class="btn-get-started animate__animated animate__fadeInUp scrollto"
+                  >Upload File</a
+                >
+              </div>
+            </div>
+            <br /><br /><br />
+            <a
+              href="#about"
+              class="btn-get-started animate__animated animate__fadeInUp scrollto"
+              >Predict</a
+            >
+            <br /><br />
+            <a
+              href="#about"
+              class="btn-get-started animate__animated animate__fadeInUp scrollto"
+              >Done</a
+            >
+          </div>
+
+          <div class="exportElement-item online">
+            <p>Prediction with API and will be implement with backend.</p>
+            <a
+              href="#about"
+              class="btn-get-started animate__animated animate__fadeInUp scrollto"
+              >Done</a
+            >
+          </div>
+        </div>
+
+        <br /><br /><br /><br />
+        <br /><br /><br /><br />
+        <br /><br /><br /><br />
+        <br /><br /><br /><br />
+        <br /><br /><br /><br />
+        <br /><br /><br /><br />
+        <br /><br /><br /><br />
+        <br /><br /><br /><br />
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Portfoio Section -->
+
+{% endblock %}

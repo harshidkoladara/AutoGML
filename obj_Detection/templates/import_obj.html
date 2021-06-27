@@ -1,0 +1,118 @@
+{% extends 'base_obj.html'%} {% block body %}
+
+<section
+  style="height: 30vh"
+  id="hero"
+  class="d-flex justify-cntent-center align-items-center"
+></section>
+
+<br /><br />
+<section class="container">
+  <h3 class="animate__animated animate__fadeInUp scrollto">
+    Import Your Data Images
+  </h3>
+  <p class="animate__animated animate__fadeInUp scrollto">
+    <strong
+      >To build custom <em>Object Detection</em> model, you need to import a set
+      of images to train the model.</strong
+    >
+  </p>
+
+  <p class="animate__animated animate__fadeInUp scrollto">
+    Upload zip only. A whole Data must be in format suggested in documentation.
+  </p>
+
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input
+      class="animate__animated animate__fadeInUp scrollto"
+      type="file"
+      accept=".zip,.rar,.7zip"
+      name="zip-file"
+      id="import-images"
+      required
+    />
+
+    <button
+      id="import-button"
+      type="submit"
+      style="margin-left: 10vw; margin-top: 10px"
+      class="box-button animate__animated animate__fadeInUp scrollto"
+    >
+      Import
+    </button>
+  </form>
+  <a
+    href="{% url 'train_obj' %}"
+    class="btn-get-started animate__animated animate__fadeInUp scrollto"
+    >Next</a
+  >
+</section>
+
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4>Incorrect Data</h4>
+      <span class="close">&times;</span>
+    </div>
+    <div class="modal-body">
+      <p>
+        <em
+          >The data provided by you is not meeting the requirements to train Object Detection.</em
+        >
+        <br>
+        <p>Import data according to specified in documentation.</p>
+      </p>
+      <br />
+    </div>
+    <div class="modal-footer">
+      <button name="okey" id="okey" type="button">Okey</button>
+    </div>
+  </div>
+</div>
+
+<div id="myModalImport" class="modal">
+  <div class="modal-content">
+    <div class="modal-body">
+      <p>
+        <em>Images uploaded successfully.</em>
+      </p>
+      <br />
+    </div>
+    <div class="modal-footer">
+      <button name="okey" id="okeyImp" type="button">Okey</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  var modalImport = document.getElementById("myModalImport");
+  var buttonImp = document.getElementById("okeyImp");
+  if ("{{uploaded}}" === "True") {
+    modalImport.style.display = "block";
+  }
+  buttonImp.onclick = function () {
+    modalImport.style.display = "none";
+    // alink.click();
+  };
+</script>
+
+<script>
+  var modal = document.getElementById("myModal");
+  var button = document.getElementById("okey");
+  var alink = document.getElementById("alink");
+  var span = document.getElementsByClassName("close")[0];
+  if ("{{incorrect}}" === "True") {
+    modal.style.display = "block";
+  }
+  span.onclick = function () {
+    modal.style.display = "none";
+    // alink.click();
+  };
+  button.onclick = function () {
+    modal.style.display = "none";
+    // alink.click();
+  };
+</script>
+
+{% endblock %}

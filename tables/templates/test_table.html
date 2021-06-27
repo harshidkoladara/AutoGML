@@ -1,0 +1,410 @@
+{% extends 'base.html'%} {% block body %}
+
+<section
+  id="hero"
+  style="height: 20vh"
+  class="d-flex justify-cntent-center align-items-center"
+></section>
+
+<!-- PREICTION  -->
+<section id="test-container" class="test-container">
+  <div class="container" data-aos="fade-up">
+    <div class="container test-container" data-aos="fade-up">
+      <div class="left-part">
+        {% if model_type == 'Classifier' %}
+        <table>
+          <tr>
+            <td>
+              <center>
+                <em>
+                  Model name
+                  :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{model.name}}
+                </em>
+              </center>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <center>
+                <em>
+                  Train Accuracy
+                  :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{accuracy.0}} %
+                </em>
+              </center>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <center>
+                <em>
+                  Test Accuracy
+                  :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{accuracy.1}}
+                  %
+                </em>
+              </center>
+            </td>
+          </tr>
+        </table>
+        {% elif model_type == 'Regressor' %}
+        <table>
+          <tr>
+            <td>
+              <center>
+                <em>
+                  Model name
+                  :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{model.name}}
+                </em>
+              </center>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <center>
+                <em>
+                  Train r2_score
+                  :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{accuracy.0}}
+                </em>
+              </center>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <center>
+                <em>
+                  Test r2_score
+                  :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{accuracy.1}}
+                </em>
+              </center>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <center>
+                <em>
+                  Train RMSE
+                  :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{accuracy.2}}
+                </em>
+              </center>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <center>
+                <em>
+                  Test RMSE
+                  :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{accuracy.3}}
+                </em>
+              </center>
+            </td>
+          </tr>
+        </table>
+        {% endif %}
+      </div>
+
+      <div class="right-part">
+        <h3 class="animate__animated animate__fadeInDown">
+          <span>Predict</span>
+        </h3>
+        <div class="predict-data">
+          <p class="animate__animated animate__fadeInUp">
+            Predict the results with your custom Machine Learning model.
+          </p>
+
+          <div id="export-type-filter">
+            <div class="radio-ehk">
+              <input type="radio" id="export" name="exportModel" checked />
+              <label for="export">Export your model</label><br />
+            </div>
+            <div class="radio-ehk">
+              <input type="radio" id="batch" name="exportModel" />
+              <label for="batch">Batch Prediction </label><br />
+            </div>
+          </div>
+
+          <div class="export-container">
+            <div id="export-block">
+              <h4 class="animate__animated animate__fadeInUp">
+                <span>Export model</span>
+              </h4>
+              <div class="export-data">
+                <p class="animate__animated animate__fadeInUp">
+                  Download your custom Machine Learning model and use it to your
+                  system to make predictions.
+                </p>
+                <button
+                  onclick="downloadD('{{fileUrl}}', '{{fileName}}')"
+                  class="box-button animate__animated animate__fadeInUp scrollto m-l-50"
+                >
+                  Download model
+                </button>
+              </div>
+              <br /><br /><br />
+            </div>
+
+            <div id="batch-block">
+              <h4 class="animate__animated animate__fadeInUp">
+                <span>Batch prediction</span>
+              </h4>
+              <div class="export-data">
+                <p class="animate__animated animate__fadeInUp">
+                  Make prediction on your limited data with your custom Machine
+                  Learning model.
+                </p>
+                <div id="import-type-filter">
+                  <div class="radio-hk animate__animated animate__fadeInUp">
+                    <input type="radio" id="github" name="import" checked />
+                    <label for="github">Predict on single entity</label>
+                  </div>
+
+                  <div class="radio-hk animate__animated animate__fadeInUp">
+                    <input type="radio" id="local" name="import" />
+                    <label for="local">Upload dataset from your computer</label>
+                  </div>
+
+                  <div id="single-item-block">
+                    <h5 class="animate__animated animate__fadeInUp">
+                      <span>Fill the fields to predict</span>
+                    </h5>
+
+                    <div class="batch-data">
+                      {% for col in columns%}
+                      <div class="inp animate__animated animate__fadeInUp">
+                        <div class="wrap">
+                          <div>
+                            <label for="{{col}}">{{col}}</label>
+                            <input
+                              id="{{col}}"
+                              name="{{col}}"
+                              type="text"
+                              class="cool"
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      {% endfor %}
+                      <button
+                        type="button"
+                        id="predict-single"
+                        class="btn-get-started animate__animated animate__fadeInUp scrollto"
+                      >
+                        Predict
+                      </button>
+                    </div>
+                  </div>
+
+                  <div id="local-block">
+                    <h5 class="animate__animated animate__fadeInUp">
+                      <span>Upload dataset from your computer</span>
+                    </h5>
+                    <form method="POST" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div class="batch-data">
+                        <p class="animate__animated animate__fadeInUp">
+                          Select CSV file from your local system.
+                        </p>
+                        <input
+                          class="animate__animated animate__fadeInUp"
+                          type="file"
+                          accept=".xlsx, .xls, .csv, .tsv"
+                          name="local"
+                          id="local_import"
+                          required=""
+                        />
+                      </div>
+                      <span id="error"
+                        >Test dataset must same as train dataset.</span
+                      >
+                      <button
+                        class="box-button animate__animated animate__fadeInUp scrollto m-l-100"
+                      >
+                        Import
+                      </button>
+                    </form>
+                    <button
+                      type="button"
+                      id="predict-dataset"
+                      class="btn-get-started animate__animated animate__fadeInUp scrollto"
+                    >
+                      Predict
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<a href="{% url 'result_table' %}" hidden id="result_table"></a>
+<br /><br /><br />
+<div class="dots-wrapper" id="dots-wrapper">
+  <span class="circle circle-1"></span>
+  <span class="circle circle-2"></span>
+  <span class="circle circle-3"></span>
+  <span class="circle circle-4"></span>
+  <span class="circle circle-5"></span>
+  <span class="circle circle-6"></span>
+  <span class="circle circle-7"></span>
+  <span class="circle circle-8"></span>
+</div>
+
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4>Prediction Result</h4>
+      <span class="close">&times;</span>
+    </div>
+    <div class="modal-body">
+      <p>
+        <em id="pred_result"></em>
+        <br />
+      </p>
+
+      <br />
+    </div>
+    <div class="modal-footer">
+      <button name="okey" id="okey" type="button">Okey</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  if ("{{error}}" == "True") {
+    document.querySelector("#error").style.display = "block";
+  }
+</script>
+<script>
+  document
+    .querySelector("#predict-dataset")
+    .addEventListener("click", function () {
+      document.querySelector("#dots-wrapper").style.display = "block";
+      document.querySelector("#test-container").style.display = "none";
+      $.ajax({
+        type: "GET",
+        url: "/table/batch-prediction/",
+        datatype: "json",
+        data: {
+          id: "{{model.id}}",
+          csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+        },
+        success: function (result) {
+          document.querySelector("#dots-wrapper").style.display = "None";
+          document.querySelector("#test-container").style.display = "block";
+          document.querySelector("#result_table").click();
+        },
+        error: function () {
+          alert("Something gone wrong. Pleas try again");
+          document.querySelector("#dots-wrapper").style.display = "None";
+          document.querySelector("#test-container").style.display = "block";
+        },
+      });
+    });
+</script>
+<script>
+  var modal = document.getElementById("myModal");
+  var button = document.getElementById("okey");
+  var span = document.getElementsByClassName("close")[0];
+
+  span.onclick = function () {
+    modal.style.display = "none";
+    // alink.click();
+  };
+  button.onclick = function () {
+    modal.style.display = "none";
+    // alink.click();
+  };
+  document
+    .querySelector("#predict-single")
+    .addEventListener("click", function (e) {
+      e.preventDefault();
+      document.querySelector("#test-container").style.display = "None";
+      document.querySelector("#dots-wrapper").style.display = "block";
+      const eles = document.querySelectorAll(".cool");
+      var values = [];
+      for (let i = 0; i < eles.length; i++) {
+        values.push(eles[i].value);
+      }
+
+      $.ajax({
+        type: "GET",
+        url: "/table/singlePredict/",
+        datatype: "json",
+        data: {
+          data: JSON.stringify(values),
+          csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+        },
+        success: function (result) {
+          document.querySelector("#dots-wrapper").style.display = "None";
+          document.querySelector("#test-container").style.display = "block";
+          modal.style.display = "block";
+          document.querySelector("#pred_result").innerHTML = result;
+        },
+        error: function () {
+          alert("Something gone wrong. Pleas try again");
+          document.querySelector("#dots-wrapper").style.display = "None";
+          document.querySelector("#test-container").style.display = "block";
+        },
+      });
+    });
+</script>
+
+<script>
+  let exportBlock = document.querySelector("#export-block");
+  let batchBlock = document.querySelector("#batch-block");
+
+  document.querySelector("#export").addEventListener("click", function () {
+    exportBlock.style.display = "block";
+    batchBlock.style.display = "none";
+  });
+  document.querySelector("#batch").addEventListener("click", function () {
+    exportBlock.style.display = "none";
+    batchBlock.style.display = "block";
+    document.querySelector("#single-item-block").style.display = "block";
+  });
+</script>
+<script>
+  let singleBlock = document.querySelector("#single-item-block");
+  let localBlock = document.querySelector("#local-block");
+  document.querySelector("#github").addEventListener("change", function () {
+    singleBlock.style.display = "block";
+    localBlock.style.display = "none";
+  });
+
+  document.querySelector("#local").addEventListener("change", function () {
+    singleBlock.style.display = "none";
+    localBlock.style.display = "block";
+  });
+</script>
+
+<script>
+  function downloadD(url, name) {
+    fetch(url).then(async (res) => {
+      const dfile = await res.blob();
+      var blobURL =
+        window.URL && window.URL.createObjectURL
+          ? window.URL.createObjectURL(dfile)
+          : window.webkitURL.createObjectURL(dfile);
+      var temLink = document.createElement("a");
+      temLink.style.display = "none";
+      temLink.href = blobURL;
+      temLink.setAttribute("Download", name);
+
+      if (typeof temLink.download === "undefined") {
+        temLink.setAttribute("target", "_blank");
+      }
+
+      document.body.appendChild(temLink);
+      temLink.click();
+
+      setTimeout(function () {
+        document.body.removeChild(temLink);
+        window.URL.revokeObjectURL(blobURL);
+      }, 200);
+    });
+  }
+</script>
+{% endblock %}

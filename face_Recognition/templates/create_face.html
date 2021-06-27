@@ -1,0 +1,43 @@
+{% extends 'base_face.html'%} {% block body %}
+
+<section id="hero" class="d-flex justify-cntent-center align-items-center">
+  <section id="hero" class="d-flex flex-column justify-content-center">
+    <div class="container" data-aos="zoom-in" data-aos-delay="100">
+      <form method="post">
+        {% csrf_token %}
+        <h1>Create a project</h1>
+        <p>
+          Let's
+          <span
+            class="typed"
+            data-typed-items="Create..., Develop..., Build..."
+          ></span>
+        </p>
+        <div>
+          <input
+            type="text"
+            name="name"
+            class="question"
+            id="nme"
+            pattern="^\S{5,}$"
+            onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Name must have at least 5 characters' : '');"
+            required
+            autocomplete="off"
+          />
+          <label for="nme"><span>What's your project name?</span></label>
+          <!-- <textarea name="message" rows="2" class="question" id="msg" required autocomplete="off"></textarea> -->
+        </div>
+        <br />
+        <button
+          type="submit"
+          class="btn-get-started animate__animated animate__fadeInUp scrollto"
+        >
+          Create Project
+        </button>
+      </form>
+    </div>
+  </section>
+  <!-- End Hero -->
+</section>
+
+{% endblock %}

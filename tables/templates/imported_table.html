@@ -1,0 +1,74 @@
+{% extends 'base.html'%} {% block body %}
+
+<section
+  id="hero"
+  style="height: 30vh"
+  class="d-flex justify-cntent-center align-items-center"
+></section>
+
+<br /><br />
+<!-- ======= Portfoio Section ======= -->
+
+<section id="portfolio" class="portfoio">
+  <div class="container" data-aos="fade-up">
+    <div>
+      <h2 class="animate__animated animate__fadeInUp">
+        <span>Imported Datasets</span>
+      </h2>
+      <a
+        class="box-n animate__animated animate__backInUp scrollto"
+        href="{% url 'import_table' %}"
+        >Add Dataset</a
+      >
+      <br />
+      <br />
+      <div>
+        <table id="t01">
+          <tr>
+            <th><center>Dataset Name</center></th>
+            <th><center>Visualize</center></th>
+            <th><center>Delete</center></th>
+          </tr>
+          {% for file in files %}
+          <tr>
+            <td><center>{{file}}</center></td>
+            <td>
+              <center>
+                <a
+                  href="{% url 'visualize_table' file %}"
+                  class="box-v animate__animated animate__fadeInUp scrollto"
+                  >Show</a
+                >
+              </center>
+            </td>
+            <td>
+              <center>
+                <form method="post">
+                  {% csrf_token %}
+                  <button
+                    type="submit"
+                    class="box-button animate__animated animate__fadeInUp scrollto"
+                    value="{{file}}"
+                    name="delete"
+                  >
+                    Delete
+                  </button>
+                </form>
+              </center>
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+
+    <a
+      href="{% url 'schema_table' %}"
+      class="btn-get-started animate__animated animate__fadeInUp scrollto"
+      >Next</a
+    >
+  </div>
+</section>
+<!-- End Portfoio Section -->
+
+{% endblock %}

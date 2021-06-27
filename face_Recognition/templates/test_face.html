@@ -1,0 +1,160 @@
+{% extends 'base_face.html'%} {% block body %} {% load static %}
+<section
+  style="height: 30vh"
+  id="hero"
+  class="d-flex justify-cntent-center align-items-center"
+></section>
+
+<br /><br />
+<section id="portfolio" class="portfoio">
+  <div class="container" data-aos="fade-up">
+    <div>
+      <h3 class="animate__animated animate__fadeInDown">
+        <span>Predict</span>
+      </h3>
+      <div class="predict-data">
+        <p class="animate__animated animate__fadeInUp">
+          Recognize faces with your custom Facial Recognition model.
+        </p>
+
+        <div id="export-type-filter">
+          <div class="radio-ehk">
+            <input type="radio" id="export" name="exportModel" checked />
+            <label for="export">Export your model</label><br />
+          </div>
+          <div class="radio-ehk">
+            <input type="radio" id="batch" name="exportModel" />
+            <label for="batch">Recognize hear</label><br />
+          </div>
+        </div>
+
+        <div class="export-container-face">
+          <div class="exportElement-item-face" id="export-block">
+            <h4 class="animate__animated animate__fadeInUp">
+              <span>Export model</span>
+            </h4>
+            <div class="export-data">
+              <p class="animate__animated animate__fadeInUp">
+                Download your custom Machine Learning model and use it to your
+                system to make predictions.
+              </p>
+              <a>
+                <button
+                  onclick="downloadD('{{fileUrl}}', '{{fileName}}')"
+                  class="box-button animate__animated animate__fadeInUp scrollto margin-left-100"
+                >
+                  Download model
+                </button></a
+              >
+            </div>
+            <br /><br /><br />
+          </div>
+
+          <div class="exportElement-item-face" id="visualize-block">
+            <h4 class="animate__animated animate__fadeInUp">
+              <span>Recognize hear</span>
+            </h4>
+            <div class="export-data">
+              <p class="animate__animated animate__fadeInUp">
+                Use your system camera to recognize
+              </p>
+            </div>
+            <button
+              id="recognize-hear-button"
+              class="box-button animate__animated animate__fadeInUp scrollto margin-left-100"
+            >
+              Recognize
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a
+      id="prev-button"
+      href="{% url 'train_face' %}"
+      style="float: left; margin-top: 70px"
+      class="btn-get-started animate__animated animate__fadeInUp scrollto"
+      >Previous</a
+    >
+  </div>
+</section>
+
+<section id="camera-feed" class="portfoio">
+  <div class="container" data-aos="fade-up">
+    <button
+      id="recognize-stop-button"
+      class="box-button animate__animated animate__fadeInUp scrollto"
+    >
+      Stop
+    </button>
+    <br /><br />
+    <!-- FOR MOBILE VIEW -->
+    <!-- <img src="{% url 'webcam_feed' %}" /> -->
+  </div>
+</section>
+
+<script>
+  let portfolio = document.querySelector("#portfolio");
+  let cameraFeed = document.querySelector("#camera-feed");
+  document
+    .querySelector("#recognize-hear-button")
+    .addEventListener("click", function () {
+      portfolio.style.display = "None";
+      cameraFeed.style.display = "Block";
+      var img = document.createElement("img");
+      img.setAttribute("src", "{% url 'video_feed' %}");
+      img.setAttribute("id", "video-frame");
+      img.classList.add("fade-up");
+      cameraFeed.appendChild(img);
+    });
+
+  document
+    .querySelector("#recognize-stop-button")
+    .addEventListener("click", function () {
+      cameraFeed.removeChild(document.querySelector("#video-frame"));
+      portfolio.style.display = "block";
+      cameraFeed.style.display = "none";
+    });
+</script>
+
+<script>
+  let exportBlock = document.querySelector("#export-block");
+  let batchBlock = document.querySelector("#visualize-block");
+  document.querySelector("#export").addEventListener("change", function () {
+    exportBlock.style.display = "block";
+    batchBlock.style.display = "none";
+  });
+  document.querySelector("#batch").addEventListener("change", function () {
+    exportBlock.style.display = "none";
+    batchBlock.style.display = "block";
+  });
+</script>
+
+<script>
+  function downloadD(url, name) {
+    fetch(url).then(async (res) => {
+      const dfile = await res.blob();
+      var blobURL =
+        window.URL && window.URL.createObjectURL
+          ? window.URL.createObjectURL(dfile)
+          : window.webkitURL.createObjectURL(dfile);
+      var temLink = document.createElement("a");
+      temLink.style.display = "none";
+      temLink.href = blobURL;
+      temLink.setAttribute("Download", name);
+
+      if (typeof temLink.download === "undefined") {
+        temLink.setAttribute("target", "_blank");
+      }
+
+      document.body.appendChild(temLink);
+      temLink.click();
+
+      setTimeout(function () {
+        document.body.removeChild(temLink);
+        window.URL.revokeObjectURL(blobURL);
+      }, 200);
+    });
+  }
+</script>
+{% endblock %}

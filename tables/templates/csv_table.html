@@ -1,0 +1,94 @@
+{% extends 'base.html'%} {% block body %}
+
+<section
+  id="hero"
+  style="height: 30vh"
+  class="d-flex justify-cntent-center align-items-center"
+></section>
+
+<br /><br />
+<!-- ======= Portfoio Section ======= -->
+
+<section id="portfolio" class="portfoio">
+  <div class="container" data-aos="fade-up">
+    <div>
+      {% if test %}
+      <div class="test-visualize">
+        <a
+          href="{% url 'test_table' %}"
+          class="btn-get-started animate__animated animate__fadeInUp scrollto"
+          >Back</a
+        >
+        <button
+          onclick="downloadD('{{fileUrl}}', '{{fileName}}')"
+          class="box-button animate__animated animate__fadeInUp scrollto m-l-50"
+        >
+          Download Result
+        </button>
+      </div>
+      {% else %}
+      <a
+        href="{% url 'imported_table' %}"
+        style="float: left"
+        class="btn-get-started animate__animated animate__fadeInUp scrollto"
+        >Back</a
+      >
+      {% endif %}
+      <br />
+      <br />
+      <br />
+      <br />
+      <div>
+        <table id="t01">
+          <tr>
+            {% for col in columns %}
+            <th><center>{{col}}</center></th>
+            {% endfor %}
+          </tr>
+          {% for col in values %}
+          <tr>
+            {% for val in col %}
+            <td><center>{{val}}</center></td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+
+    <a
+      href="{% url 'schema_table' %}"
+      class="btn-get-started animate__animated animate__fadeInUp scrollto"
+      >Next</a
+    >
+  </div>
+</section>
+<!-- End Portfoio Section -->
+<script>
+  function downloadD(url, name) {
+    fetch(url).then(async (res) => {
+      const dfile = await res.blob();
+      var blobURL =
+        window.URL && window.URL.createObjectURL
+          ? window.URL.createObjectURL(dfile)
+          : window.webkitURL.createObjectURL(dfile);
+      var temLink = document.createElement("a");
+      temLink.style.display = "none";
+      temLink.href = blobURL;
+      temLink.setAttribute("Download", name);
+
+      if (typeof temLink.download === "undefined") {
+        temLink.setAttribute("target", "_blank");
+      }
+
+      document.body.appendChild(temLink);
+      temLink.click();
+
+      setTimeout(function () {
+        document.body.removeChild(temLink);
+        window.URL.revokeObjectURL(blobURL);
+      }, 200);
+    });
+  }
+</script>
+{% endblock %}

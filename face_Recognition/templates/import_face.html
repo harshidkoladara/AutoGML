@@ -1,0 +1,80 @@
+{% extends 'base_face.html'%} {% block body %}
+
+<section
+  style="height: 30vh"
+  id="hero"
+  class="d-flex justify-cntent-center align-items-center"
+></section>
+
+<br /><br />
+<section class="container">
+  <h3 class="animate__animated animate__fadeInUp scrollto">
+    Import Your Image
+  </h3>
+  <p class="animate__animated animate__fadeInUp scrollto">
+    <strong
+      >To build custom <em>Facial Recognition</em> model, you need to import a
+      set of images to train the model.</strong
+    >
+  </p>
+  <p class="animate__animated animate__fadeInUp scrollto">
+    <b>Upload images from your computer</b>
+  </p>
+  <p class="animate__animated animate__fadeInUp scrollto">
+    Upload JPEG only. Image name must be in labeled with 'classname' format.
+  </p>
+
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input
+      class="animate__animated animate__fadeInUp scrollto"
+      type="file"
+      accept="image/*"
+      name="images"
+      id="import-images"
+      required
+      multiple
+    />
+
+    <button
+      id="import-button"
+      type="submit"
+      style="margin-left: 10vw; margin-top: 10px"
+      class="box-button animate__animated animate__fadeInUp scrollto"
+    >
+      Import
+    </button>
+  </form>
+  <a
+    href="{% url 'image_face' %}"
+    class="btn-get-started animate__animated animate__fadeInUp scrollto"
+    >Next</a
+  >
+</section>
+
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-body">
+      <p>
+        <em>Images uploaded successfully.</em>
+      </p>
+      <br />
+    </div>
+    <div class="modal-footer">
+      <button name="okey" id="okey" type="button">Okey</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  var modal = document.getElementById("myModal");
+  var button = document.getElementById("okey");
+  if ("{{uploaded}}" === "True") {
+    modal.style.display = "block";
+  }
+  button.onclick = function () {
+    modal.style.display = "none";
+    // alink.click();
+  };
+</script>
+{% endblock %}

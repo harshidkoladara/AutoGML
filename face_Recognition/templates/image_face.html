@@ -1,0 +1,160 @@
+{% extends 'base_face.html'%} {% block body %} {% load static %}
+
+<section
+  style="height: 30vh"
+  id="hero"
+  class="d-flex justify-cntent-center align-items-center"
+></section>
+
+<br /><br />
+<!-- ======= Portfoio Section ======= -->
+<section id="portfolio" class="portfoio">
+  <div class="container">
+    <div class="portfolio-container">
+      <!-- IMAGES -->
+      <div class="portfolio-item filter-schema">
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          <div class="image-buttons">
+            <span>
+              <a
+                href="{% url 'import_face' %}"
+                class="box-button animate__animated animate__fadeInUp scrollto"
+                >Add images</a
+              >
+            </span>
+            <span>
+              <button
+                type="submit"
+                name="delete"
+                value="True"
+                class="box-button warning animate__animated animate__fadeInUp scrollto"
+              >
+                Delete
+              </button>
+            </span>
+
+            <span>
+              <input
+                type="button"
+                onclick="myFunction()"
+                value="Advanced Setting"
+                class="box-button animate__animated animate__fadeInUp scrollto"
+            /></span>
+          </div>
+
+          <div id="myDIV">
+            <div class="advanced-setting">
+              <div class="box">
+                <select name="class_verify">
+                  <option selected="selected" disabled="disabled" value="none">
+                    Select label
+                  </option>
+                  {% for class in image_names %}
+                  <option value="{{class}}">{{class}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <button type="submit" value="True" name="verify" class="box-v">
+                Verify
+              </button>
+            </div>
+
+            <div class="advanced-setting">
+              <div class="box">
+                <select name="class_delete">
+                  <option selected="selected" disabled="disabled" value="none">
+                    Delete label
+                  </option>
+                  {% for class in image_names %}
+                  <option value="{{class}}">{{class}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <button
+                type="submit"
+                value="True"
+                name="delete-label"
+                class="box-v"
+              >
+                Delete
+              </button>
+            </div>
+
+            <div class="advanced-setting">
+              <div class="inp">
+                <div class="wrap">
+                  <div>
+                    <label for="add_class">Add Label</label>
+                    <input
+                      id="add_class"
+                      name="add_class"
+                      type="text"
+                      class="cool"
+                    />
+                  </div>
+                </div>
+              </div>
+              <button type="submit" value="True" name="add-class" class="box-v">
+                Add
+              </button>
+            </div>
+          </div>
+
+          <div class="scroll">
+            <div class="row">
+              {% for image in images %}
+              <div class="column content_img">
+                <input
+                  type="checkbox"
+                  id="chb{{image.0}}"
+                  value="{{image.0}}"
+                  name="selected_img"
+                  hidden
+                />
+                <label for="chb{{image.0}}">
+                  <img
+                    src="{{dir}}{{image.0}}"
+                    alt="{{image.1}}"
+                    style="width: 100%"
+                  />
+                </label>
+                <div class="title">{{image.1}}</div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </form>
+
+        <a
+          href="{% url 'train_face' %}"
+          class="btn-get-started animate__animated animate__fadeInUp scrollto"
+          >Next</a
+        >
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Portfoio Section -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script>
+  $("img").click(function () {
+    $(this).toggleClass("selected");
+  });
+</script>
+
+<script>
+  function myFunction() {
+    var x = document.getElementById("myDIV");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
+</script>
+
+{% endblock %}

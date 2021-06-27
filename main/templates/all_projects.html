@@ -1,0 +1,272 @@
+{% extends 'base.html'%} {% block body %}
+<!-- ======= Top Bar ======= -->
+
+<!-- ======= Hero Section ======= -->
+<section
+  id="hero"
+  style="height: 20vh"
+  class="d-flex justify-cntent-center align-items-center"
+></section>
+
+<main id="main">
+  <!-- ======= Icon Boxes Section ======= -->
+
+  <section style="margin-top: 20vh" id="icon-boxes" class="icon-boxes">
+    <div class="container">
+      <h2
+        style="margin-bottom: 10px"
+        class="animate__animated animate__fadeInUp scrollto"
+      >
+        <strong>Facial Recognization</strong>
+      </h2>
+      <div class="row">
+        <div
+          class="col-md-6 col-lg-3 align-items-stretch mb-5 mb-lg-1"
+          data-aos="fade-up"
+        >
+          <div class="icon-box">
+            <div class="icon">
+              <a href="{% url 'create_face' %}"><i class="bx bx-plus"></i></a>
+            </div>
+            <h4 class="title">
+              <a href="{% url 'create_face' %}">Add Project</a>
+            </h4>
+            <p class="description">
+              <a href="{% url 'create_face' %}"></a>Create new project<br /><br /><br />
+            </p>
+          </div>
+        </div>
+
+        {% for model in face_recog %}
+        <div
+          style="padding-bottom: 30px"
+          class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+          <div class="icon-box">
+            <div class="icon">
+              <a href="{% url 'caller_fr' model.project_id %}"
+                ><i class="bx bx-file"></i
+              ></a>
+            </div>
+            <h4 class="title">
+              <a href="{% url 'caller_fr' model.project_id %}"
+                >{{model.name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a
+              >
+            </h4>
+          </div>
+          <br />
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  <!-- End Icon Boxes Section -->
+
+  <section id="icon-boxes" class="icon-boxes">
+    <div class="container">
+      <h2
+        style="margin-bottom: 10px"
+        class="animate__animated animate__fadeInUp scrollto"
+      >
+        <strong>Object Detection</strong>
+      </h2>
+      <div class="row">
+        <div
+          class="col-md-6 col-lg-3 align-items-stretch mb-5 mb-lg-1"
+          data-aos="fade-up"
+        >
+          <div class="icon-box">
+            <div class="icon">
+              <a href="{% url 'create_obj' %}"><i class="bx bx-plus"></i></a>
+            </div>
+            <h4 class="title">
+              <a href="{% url 'create_obj' %}">Add Project</a>
+            </h4>
+            <p class="description">
+              <a href="{% url 'create_obj' %}">Create new project</a
+              ><br /><br /><br />
+            </p>
+          </div>
+        </div>
+
+        {% for model in obj_detect %}
+        <div
+          style="padding-bottom: 30px"
+          class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+          <div class="icon-box">
+            <div class="icon">
+              <a href="{% url 'caller_od' model.project_id %}"
+                ><i class="bx bx-file"></i
+              ></a>
+            </div>
+            <h4 class="title">
+              <a href="{% url 'caller_od' model.project_id %}"
+                >{{model.name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a
+              >
+            </h4>
+          </div>
+          <br />
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  <!-- End Icon Boxes Section -->
+
+  <section id="icon-boxes" class="icon-boxes">
+    <div class="container">
+      <h2
+        style="margin-bottom: 10px"
+        class="animate__animated animate__fadeInUp scrollto"
+      >
+        <strong>Image Classification</strong>
+      </h2>
+      <div class="row">
+        <div
+          class="col-md-6 col-lg-3 align-items-stretch mb-5 mb-lg-1"
+          data-aos="fade-up"
+        >
+          <div class="icon-box">
+            <div class="icon">
+              <a href="{% url 'createProject_clf'%}"
+                ><i class="bx bx-plus"></i
+              ></a>
+            </div>
+            <h4 class="title">
+              <a href="{% url 'createProject_clf'%}">Add Project</a>
+            </h4>
+            <p class="description">
+              <a href="{% url 'createProject_clf'%}">Create new project</a>
+            </p>
+          </div>
+          <br />
+        </div>
+
+        {% for model in img_clf %}
+        <div
+          style="padding-bottom: 30px"
+          class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+          <div class="icon-box">
+            <div class="icon">
+              <a href="{% url 'caller_clf' model.project_id %}"
+                ><i class="bx bx-file"></i
+              ></a>
+            </div>
+            <h4 class="title">
+              <a href="{% url 'caller_clf' model.project_id %}"
+                >{{model.name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a
+              >
+            </h4>
+          </div>
+          <br />
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  <!-- End Icon Boxes Section -->
+
+  <section id="icon-boxes" class="icon-boxes">
+    <div class="container">
+      <h2
+        style="margin-bottom: 10px"
+        class="animate__animated animate__fadeInUp scrollto"
+      >
+        <strong>Tables</strong>
+      </h2>
+      <div class="row">
+        <div
+          class="col-md-6 col-lg-3 align-items-stretch mb-5 mb-lg-1"
+          data-aos="fade-up"
+        >
+          <div class="icon-box">
+            <div class="icon">
+              <a href="{% url 'createProject'%}"><i class="bx bx-plus"></i></a>
+            </div>
+            <h4 class="title">
+              <a href="{% url 'createProject'%}">Add Project</a>
+            </h4>
+            <p class="description">
+              <a href="{% url 'createProject'%}">Create new project</a>
+            </p>
+          </div>
+          <br />
+        </div>
+
+        {% for model in table %}
+        <div
+          style="padding-bottom: 30px"
+          class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+          <div class="icon-box">
+            <div class="icon">
+              <a href="{% url 'caller' model.project_id %}"
+                ><i class="bx bx-file"></i
+              ></a>
+            </div>
+            <h4 class="title">
+              <a href="{% url 'caller' model.project_id %}"
+                >{{model.name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a
+              >
+            </h4>
+          </div>
+          <br />
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  <!-- End Icon Boxes Section -->
+
+  <!-- <section id="icon-boxes" class="icon-boxes">
+    <div class="container">
+      <h2
+        style="margin-bottom: 10px"
+        class="animate__animated animate__fadeInUp scrollto"
+      >
+        <strong>API</strong>
+      </h2>
+      <div class="row">
+        <div
+          class="col-md-6 col-lg-3 align-items-stretch mb-5 mb-lg-1"
+          data-aos="fade-up"
+        >
+          <div class="icon-box">
+            <div class="icon">
+              <a href="#"><i class="bx bx-plus"></i></a>
+            </div>
+            <h4 class="title"><a href="#">Add Project</a></h4>
+            <p class="description">Create new project<br /><br /><br /></p>
+          </div>
+        </div>
+
+        <!-- Apply for loop for existing projects -->
+  <!-- <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="100">
+            <div class="icon-box">
+              <div class="icon"><i class="bx bx-file"></i></div>
+              <h4 class="title"><a href="">Sed ut perspiciatis</a></h4>
+              <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
+            </div>
+          </div> -->
+  <!--</div>
+    </div>
+  </section> -->
+</main>
+<!-- End #main -->
+
+<!-- ======= Footer ======= -->
+
+<a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
+<div id="preloader"></div>
+
+{% endblock %}

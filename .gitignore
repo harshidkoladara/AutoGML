@@ -127,3 +127,12 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+\tables\data_cleaning.py
+\tables\ml_model.py
+\obj_Detection\utils\
+\obj_Detection\weights\
+\obj_Detection\models\
+\imgclf\train_img_classifier.py
+s

@@ -1,0 +1,108 @@
+{% extends 'base.html'%} {% block body %}
+
+<section
+  id="hero"
+  style="height: 30vh"
+  class="d-flex justify-cntent-center align-items-center"
+></section>
+
+<br /><br />
+<!-- ======= Portfoio Section ======= -->
+<section id="portfolio" class="portfoio">
+  <div class="container" data-aos="fade-up">
+    <div class="portfolio-item filter-train">
+      <h2 class="animate__animated animate__fadeInDown">
+        <span>Train your model</span>
+      </h2>
+      <div class="train">
+        <div class="wrap">
+          <div>
+            <label for="github">Model name</label>
+            <input
+              id="github"
+              type="text"
+              value="{{model.name}}"
+              class="cool"
+              disabled
+            />
+          </div>
+        </div>
+      </div>
+      <div class="train-model">
+        <h4 class="animate__animated animate__fadeInDown">
+          <span>Summary</span>
+        </h4>
+        <p class="animate__animated animate__fadeInUp">
+          Model name : {{model.name}}
+        </p>
+        {% comment %}
+        <p class="animate__animated animate__fadeInUp">Data split : ****</p>
+        {% endcomment %}
+        <p class="animate__animated animate__fadeInUp">
+          Input features : {{input_f}}
+        </p>
+        <p class="animate__animated animate__fadeInUp">
+          Input Instances : {{input_i}}
+        </p>
+        <p class="animate__animated animate__fadeInUp">Target : {{target}}</p>
+        <button
+          id="train-tables-button"
+          type="button"
+          class="box-button animate__animated animate__fadeInUp scrollto m-l-100"
+        >
+          Train Model
+        </button>
+      </div>
+      <div>
+        <a
+          href="{% url 'analyze_table' %}"
+          style="float: left; margin-top: 70px"
+          class="btn-get-started animate__animated animate__fadeInUp scrollto"
+          >Previous</a
+        >
+        <a
+          id="next-button"
+          href="{% url 'test_table' %}"
+          style="margin-top: 70px"
+          class="btn-get-started animate__animated animate__fadeInUp scrollto"
+          >Next</a
+        >
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Portfoio Section -->
+
+<div class="dots-wrapper" id="dots-wrapper">
+  <span class="circle circle-1"></span>
+  <span class="circle circle-2"></span>
+  <span class="circle circle-3"></span>
+  <span class="circle circle-4"></span>
+  <span class="circle circle-5"></span>
+  <span class="circle circle-6"></span>
+  <span class="circle circle-7"></span>
+  <span class="circle circle-8"></span>
+</div>
+
+<script>
+  document
+    .querySelector("#train-tables-button")
+    .addEventListener("click", function () {
+      document.querySelector("#portfolio").style.display = "None";
+      document.querySelector("#dots-wrapper").style.display = "block";
+      $.ajax({
+        type: "GET",
+        url: "/table/trainingProcessStart/",
+        datatype: "json",
+        data: {
+          name: "{{model.name}}",
+          csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+        },
+        success: function () {
+          document.querySelector("#next-button").click();
+        },
+      });
+    });
+</script>
+
+{% endblock %}

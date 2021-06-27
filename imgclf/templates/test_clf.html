@@ -1,0 +1,298 @@
+{% extends 'base_clf.html'%} {% block body %} {% load static %}
+<section
+  style="height: 30vh"
+  id="hero"
+  class="d-flex justify-cntent-center align-items-center"
+></section>
+
+<br /><br />
+<section id="portfolio" class="portfoio">
+  <div class="container test-container" data-aos="fade-up">
+    <div class="left-part">
+      <table>
+        <tr>
+          <td>Train Loss : {{data.0}}</td>
+        </tr>
+        <tr>
+          <td>Train Accuracy : {{data.1}} %</td>
+        </tr>
+        <tr>
+          <td>Valid Loss : {{data.2}}</td>
+        </tr>
+        <tr>
+          <td>Valid Accuracy : {{data.3}} %</td>
+        </tr>
+      </table>
+    </div>
+    <div class="right-part">
+      <h3 class="animate__animated animate__fadeInDown">
+        <span>Predict</span>
+      </h3>
+      <div class="predict-data">
+        <p class="animate__animated animate__fadeInUp">
+          Recognize faces with your custom Image Classification model.
+        </p>
+
+        <div id="export-type-filter">
+          <div class="radio-ehk">
+            <input type="radio" id="export" name="exportModel" checked />
+            <label for="export">Export your model</label><br />
+          </div>
+          <div class="radio-ehk">
+            <input type="radio" id="batch" name="exportModel" />
+            <label for="batch">Recognize hear</label><br />
+          </div>
+        </div>
+
+        <div class="export-container-face">
+          <div class="exportElement-item-face" id="export-block">
+            <h4 class="animate__animated animate__fadeInUp">
+              <span>Export model</span>
+            </h4>
+            <div class="export-data">
+              <p class="animate__animated animate__fadeInUp">
+                Download your custom Machine Learning model and use it to your
+                system to make predictions.
+              </p>
+              <a>
+                <button
+                  onclick="downloadD('{{fileUrl}}', '{{fileName}}')"
+                  class="box-button animate__animated animate__fadeInUp scrollto margin-left-100"
+                >
+                  Download model
+                </button></a
+              >
+            </div>
+            <br /><br /><br />
+          </div>
+
+          <div class="exportElement-item-face" id="visualize-block">
+            <h4 class="animate__animated animate__fadeInUp">
+              <span>Recognize hear</span>
+            </h4>
+            <div class="export-data">
+              <p class="animate__animated animate__fadeInUp">
+                Upload hear images to detect the class of images
+              </p>
+            </div>
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <input
+                type="file"
+                accept=".png, .jpeg, .jpg"
+                name="local-dirs"
+                id="local_import"
+                required=""
+                multiple
+                class="animate__animated animate__fadeInUp scrollto"
+              /><br /><br />
+              <button
+                type="submit"
+                id="upload-button"
+                class="box-button animate__animated animate__fadeInUp scrollto m-l-50"
+              >
+                Upload Images
+              </button>
+            </form>
+            <div>
+              <button
+                type="submit"
+                id="recognize-hear-button"
+                class="btn-get-started animate__animated animate__fadeInUp scrollto m-r"
+              >
+                Recognize
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="detection-result" class="portfoio">
+  <div class="container" data-aos="fade-up">
+    <div class="detect-buttons">
+      <button
+        type="button"
+        id="test-back-button"
+        class="btn-get-started detect-back animate__animated animate__fadeInUp scrollto"
+      >
+        back
+      </button>
+      <button
+        onclick="downloadR()"
+        id="test-download-button"
+        type="button"
+        class="box-button detect-download animate__animated animate__fadeInUp scrollto"
+      >
+        Download Report
+      </button>
+    </div>
+    <h3 class="m-l-100">Detection Result</h3>
+    <div class="scroll-test">
+      <div style="margin-left: 100px" class="row" id="scrollbar">
+        {% for image in images %}
+        <div class="column content_img">
+          <input
+            type="checkbox"
+            id="chb{{image.0}}"
+            value="{{image.0}}"
+            name="selected_img"
+            hidden
+          />
+          <label for="chb{{image.0}}">
+            <img src="{{image.0}}" style="width: 100%" />
+          </label>
+          <div>{{image.1}}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="dots-wrapper" id="dots-wrapper">
+  <span class="circle circle-1"></span>
+  <span class="circle circle-2"></span>
+  <span class="circle circle-3"></span>
+  <span class="circle circle-4"></span>
+  <span class="circle circle-5"></span>
+  <span class="circle circle-6"></span>
+  <span class="circle circle-7"></span>
+  <span class="circle circle-8"></span>
+</div>
+
+<script>
+  var sc = document.querySelector("#scrollbar");
+  var add_img = function (dir, image, iclass) {
+    var column = document.createElement("div");
+    column.classList.add("column", "content_img");
+    var label = document.createElement("label");
+    var img = document.createElement("img");
+    img.setAttribute("width", "100%");
+    img.setAttribute("src", `${dir}/${image}`);
+    label.appendChild(img);
+    var div = document.createElement("div");
+    div.innerHTML = iclass;
+    column.appendChild(label);
+    column.appendChild(div);
+    sc.appendChild(column);
+  };
+</script>
+
+<script>
+  var file_uRl;
+  var file_name;
+  document
+    .querySelector("#recognize-hear-button")
+    .addEventListener("click", function () {
+      document.querySelector("#portfolio").style.display = "None";
+      document.querySelector("#dots-wrapper").style.display = "block";
+      $.ajax({
+        type: "GET",
+        url: "/imgclf/detect/",
+        datatype: "json",
+        data: {
+          id: "{{model.id}}",
+          csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+        },
+        success: function (result, name, url, size) {
+          document.querySelector("#dots-wrapper").style.display = "None";
+          document.querySelector("#detection-result").style.display = "block";
+
+          var data = JSON.parse(result);
+          for (let i = 0; i < data.length - 3; i++) {
+            add_img("{{dir}}", data[i][0], data[i][1]);
+          }
+
+          file_name = data[data.length - 3];
+          file_uRl = data[data.length - 2];
+          // const attrName = "downloadD(" + file_uRl + ", '" + file_name + "')";
+          // console.log(attrName);
+          // document
+          //   .querySelector("#test-download-button")
+          //   .setAttribute("onclick", attrName);
+        },
+      });
+    });
+</script>
+
+<script>
+  document
+    .querySelector("#test-back-button")
+    .addEventListener("click", function () {
+      document.querySelector("#detection-result").style.display = "none";
+      document.querySelector("#portfolio").style.display = "block";
+    });
+</script>
+<script>
+  let exportBlock = document.querySelector("#export-block");
+  let batchBlock = document.querySelector("#visualize-block");
+  document.querySelector("#export").addEventListener("change", function () {
+    exportBlock.style.display = "block";
+    batchBlock.style.display = "none";
+  });
+  document.querySelector("#batch").addEventListener("change", function () {
+    exportBlock.style.display = "none";
+    batchBlock.style.display = "block";
+  });
+</script>
+
+<script>
+  function downloadR() {
+    const url = file_uRl;
+    const name = file_name;
+    fetch(url).then(async (res) => {
+      const dfile = await res.blob();
+      var blobURL =
+        window.URL && window.URL.createObjectURL
+          ? window.URL.createObjectURL(dfile)
+          : window.webkitURL.createObjectURL(dfile);
+      var temLink = document.createElement("a");
+      temLink.style.display = "none";
+      temLink.href = blobURL;
+      temLink.setAttribute("Download", name);
+
+      if (typeof temLink.download === "undefined") {
+        temLink.setAttribute("target", "_blank");
+      }
+
+      document.body.appendChild(temLink);
+      temLink.click();
+
+      setTimeout(function () {
+        document.body.removeChild(temLink);
+        window.URL.revokeObjectURL(blobURL);
+      }, 200);
+    });
+  }
+</script>
+<script>
+  function downloadD(url, name) {
+    fetch(url).then(async (res) => {
+      const dfile = await res.blob();
+      var blobURL =
+        window.URL && window.URL.createObjectURL
+          ? window.URL.createObjectURL(dfile)
+          : window.webkitURL.createObjectURL(dfile);
+      var temLink = document.createElement("a");
+      temLink.style.display = "none";
+      temLink.href = blobURL;
+      temLink.setAttribute("Download", name);
+
+      if (typeof temLink.download === "undefined") {
+        temLink.setAttribute("target", "_blank");
+      }
+
+      document.body.appendChild(temLink);
+      temLink.click();
+
+      setTimeout(function () {
+        document.body.removeChild(temLink);
+        window.URL.revokeObjectURL(blobURL);
+      }, 200);
+    });
+  }
+</script>
+{% endblock %}

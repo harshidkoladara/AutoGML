@@ -1,0 +1,127 @@
+{% extends 'base_clf.html'%} {% block body %}
+<section
+  style="height: 30vh"
+  id="hero"
+  class="d-flex justify-cntent-center align-items-center"
+></section>
+
+<br /><br />
+<section id="portfolio" class="portfoio">
+  <div class="container" data-aos="fade-up">
+    <!-- Training Parameter Start -->
+    <div id="training-parameters">
+      <h3 class="animate__animated animate__fadeInDown">
+        <span>Train your model</span>
+      </h3>
+      <div class="train">
+        <div class="wrap">
+          <div>
+            <label for="github">Model name</label>
+            <input
+              id="github"
+              type="text"
+              value="{{model.name}}"
+              class="cool"
+              disabled
+            />
+          </div>
+        </div>
+      </div>
+      <div class="train-model">
+        <h4 class="animate__animated animate__fadeInDown">Summary</h4>
+        <p><strong>Model name :</strong> <em>{{model.name}}</em></p>
+        <p><strong>Input Classes :</strong> {{data.0}}</p>
+        <p><strong>Input Instances :</strong> {{data.1}}</p>
+        <p class="advanced" id="advanced-setting">
+          <strong><em>Advanced Settings</em></strong>
+        </p>
+        <div id="advanced-settings-block">
+          <label for="epochs"><strong>Epochs</strong> : </label>
+          <input
+            type="number"
+            name="epochs"
+            id="epochs"
+            min="1"
+            max="60"
+            value="10"
+          />
+        </div>
+      </div>
+
+      <button
+        id="train-img-clf-button"
+        type="button"
+        class="box-button animate__animated animate__fadeInUp scrollto m-l-100"
+      >
+        Train Model
+      </button>
+      <div>
+        <a
+          href="{% url 'image_clf' %}"
+          style="float: left; margin-top: 70px"
+          class="btn-get-started animate__animated animate__fadeInUp scrollto"
+          >Previous</a
+        >
+        <a
+          id="next-button"
+          href="{% url 'test_clf' %}"
+          style="margin-top: 70px"
+          class="btn-get-started animate__animated animate__fadeInUp scrollto"
+          >Next</a
+        >
+      </div>
+    </div>
+    <!-- Training Parameters End -->
+
+    <!-- Traing Progress Bubbles start -->
+    <div class="dots-wrapper" id="dots-wrapper">
+      <span class="circle circle-1"></span>
+      <span class="circle circle-2"></span>
+      <span class="circle circle-3"></span>
+      <span class="circle circle-4"></span>
+      <span class="circle circle-5"></span>
+      <span class="circle circle-6"></span>
+      <span class="circle circle-7"></span>
+      <span class="circle circle-8"></span>
+    </div>
+    <!-- Training Process Bubbles End -->
+  </div>
+</section>
+
+<script>
+  document
+    .querySelector("#train-img-clf-button")
+    .addEventListener("click", function () {
+      document.querySelector("#training-parameters").style.display = "None";
+      document.querySelector("#dots-wrapper").style.display = "block";
+      $.ajax({
+        type: "GET",
+        url: "/imgclf/training-ongoing/",
+        datatype: "json",
+        data: {
+          id: "{{model.id}}",
+          epochs: document.querySelector("#epochs").value,
+          csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+        },
+        success: function () {
+          document.querySelector("#dots-wrapper").style.display = "None";
+          document.querySelector("#next-button").click();
+        },
+      });
+    });
+</script>
+
+<script>
+  let disBlock = document.querySelector("#advanced-settings-block");
+  document
+    .querySelector("#advanced-setting")
+    .addEventListener("click", function () {
+      if (disBlock.style.display === "none") {
+        disBlock.style.display = "block";
+      } else {
+        disBlock.style.display = "none";
+      }
+    });
+</script>
+
+{% endblock %}

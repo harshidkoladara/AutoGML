@@ -1,0 +1,138 @@
+{% extends 'base.html'%}
+{% block body %}
+<!-- ======= Top Bar ======= -->
+
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="d-flex justify-cntent-center align-items-center">
+  <div id="heroCarousel" class="container carousel carousel-fade" data-ride="carousel">
+
+    <!-- Slide 1 -->
+    <div class="carousel-item active">
+      <div class="carousel-container">
+        <h2 class="animate__animated animate__fadeInDown"><span>AutoGML Tables</span></h2>
+        <p class="animate__animated animate__fadeInUp">AutoGML Tables enables you to automatically build and deploy
+          state-of-the-art machine learning models on structured data at massively increased speed and scale.</p>
+        <a href="#about" class="btn-get-started animate__animated animate__fadeInUp scrollto">Learn More</a>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="carousel-item">
+      <div class="carousel-container">
+        <h2 class="animate__animated animate__fadeInDown">AutoGML Tables</h2>
+        <p class="animate__animated animate__fadeInUp">AutoGML Tables provides a trained model by just importing
+          datasets and a few clicks and then deploy it to in your system.</p>
+        <a href="#about" class="btn-get-started animate__animated animate__fadeInUp scrollto">Learn More</a>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="carousel-item">
+      <div class="carousel-container">
+        <h2 class="animate__animated animate__fadeInDown">AutoGML Tables</h2>
+        <p class="animate__animated animate__fadeInUp">AutoGML Tables reduces developers efforts to build machine
+          learning system from days to hours. </p>
+        <a href="#about" class="btn-get-started animate__animated animate__fadeInUp scrollto">Learn More</a>
+      </div>
+    </div>
+
+    <a class="carousel-control-prev" href="#heroCarousel" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon bx bx-chevron-left" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+
+    <a class="carousel-control-next" href="#heroCarousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon bx bx-chevron-right" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+
+  </div>
+</section><!-- End Hero -->
+
+<main id="main">
+
+  <!-- ======= Icon Boxes Section ======= -->
+  <section id="icon-boxes" class="icon-boxes">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-lg-3  align-items-stretch mb-5 mb-lg-1" data-aos="fade-up">
+          <div class="icon-box">
+            <div class="icon"><a href="{% url 'createProject'%}"><i class="bx bx-plus"></i></a></div>
+            <h4 class="title"><a href="{% url 'createProject'%}">Add Project</a></h4>
+            <p class="description"><a href="{% url 'createProject'%}">Create new project</a></p>
+          </div><br>
+        </div>
+
+        <!-- Apply for loop for existing projects -->
+        {% for model in models %}
+        <div style="padding-bottom: 30px;" class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0"
+          data-aos="fade-up" data-aos-delay="100">
+          <div class="icon-box">
+            <div class="icon"><a href="{% url 'caller' model.project_id %}"><i class="bx bx-file"></i></a></div>
+            <h4 class="title"><a href="{% url 'caller' model.project_id %}">{{model.name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></h4>
+          
+          </div><br>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section><!-- End Icon Boxes Section -->
+
+  <!-- ======= Services Section ======= -->
+  <section id="services" class="services">
+    <div class="container" data-aos="fade-up">
+
+      <div class="section-title">
+        <h2>Services</h2>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+          <div class="icon-box">
+            <i class="icofont-chart-bar-graph"></i>
+            <h4><a href="#">Regression</a></h4>
+            <p>AutoGML Tables provides Regression models for Supervised Learning and predict results as per data.</p>
+          </div>
+        </div>
+        <div class="col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="fade-up" data-aos-delay="200">
+          <div class="icon-box">
+            <i class="icofont-image"></i>
+            <h4><a href="#">Classification</a></h4>
+            <p>AutoGML Tables provides Classification models for Supervised Learning and predict object class as per
+              lebels.</p>
+          </div>
+        </div>
+        <div class="col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="fade-up" data-aos-delay="300">
+          <div class="icon-box">
+            <i class="icofont-computer"></i>
+            <h4><a href="#">Clustering</a></h4>
+            <p>AutoGML Tables provides Clustering models for Unsupervised Learning and organizes objects into distinct
+              clusters.</p>
+          </div>
+        </div>
+        <div class="col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="fade-up" data-aos-delay="400">
+          <div class="icon-box">
+            <i class="icofont-settings"></i>
+            <h4><a href="#">Reinforcement Learning</a></h4>
+            <p>AutoGML Tables provides models training by Reinforcement Learning for complex task.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section><!-- End Services Section -->
+
+
+
+
+
+
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+
+
+<a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
+<div id="preloader"></div>
+
+{% endblock %}

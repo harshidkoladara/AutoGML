@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% load static %}
+
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="generator" content="Mobirise v4.12.4, mobirise.com" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1"
+    />
+    <link
+      rel="shortcut icon"
+      href="{% static 'assets/images/favicon.png' %}"
+      type="image/x-icon"
+    />
+    <meta name="description" content="" />
+
+    <title>AutoGML</title>
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/web/assets/mobirise-icons/mobirise-icons.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/bootstrap/css/bootstrap-grid.min.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/bootstrap/css/bootstrap-reboot.min.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/socicon/css/styles.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/dropdown/css/style.css' %}"
+    />
+    <link rel="stylesheet" href="{% static 'assets/tether/tether.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/theme/css/style.css' %}" />
+    <link
+      rel="preload"
+      as="style"
+      href="{% static 'assets/mobirise/css/mbr-additional.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/mobirise/css/mbr-additional.css' %}"
+      type="text/css"
+    />
+  </head>
+  <body>
+    <section class="menu cid-qTkzRZLJNu" once="menu" id="menu1-0">
+      <nav
+        class="navbar navbar-expand beta-menu navbar-dropdown align-items-center navbar-fixed-top navbar-toggleable-sm"
+      >
+        <button
+          class="navbar-toggler navbar-toggler-right"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </button>
+        <div class="menu-logo">
+          <div class="navbar-brand">
+            <span class="navbar-logo">
+              <a href="#">
+                <img
+                  src="{% static 'assets/images/logo2.png' %}"
+                  alt="Mobirise"
+                  style="height: 3.8rem"
+                />
+              </a>
+            </span>
+            <span class="navbar-caption-wrap">
+              <a class="navbar-caption text-white display-4" href="#">
+                AutoGML
+              </a>
+            </span>
+          </div>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav nav-dropdown" data-app-modern-menu="true">
+            <li class="nav-item">
+              <a
+                class="nav-link link text-white display-4"
+                href="{% url 'allProject' %}"
+              >
+                <span class="mbri-info mbr-iconfont mbr-iconfont-btn"></span>
+                Dashboard
+              </a>
+            </li>
+          </ul>
+          {% if log %}
+          <a class="nav-link link text-white display-4" href="#">
+            Hi, {{user.fname}}
+          </a>
+          <div class="navbar-buttons mbr-section-btn">
+            <a
+              class="btn btn-sm btn-primary display-4"
+              href="{% url 'logout' %}"
+            >
+              <span class="mbri-logout mbr-iconfont mbr-iconfont-btn"></span>
+              Log out
+            </a>
+          </div>
+          {% endif %} {% if auth %}
+          <div class="navbar-buttons mbr-section-btn">
+            <a
+              class="btn btn-sm btn-primary display-4"
+              href="{% url 'login' %}"
+            >
+              <span class="mbri-login mbr-iconfont mbr-iconfont-btn"></span>
+              Log in
+            </a>
+          </div>
+          {% endif %}
+        </div>
+      </nav>
+    </section>
+
+    <section
+      class="cid-qTkA127IK8 mbr-fullscreen mbr-parallax-background"
+      id="header2-1"
+    >
+      <div class="container align-center">
+        <div class="row justify-content-md-center">
+          <div class="mbr-white col-md-10">
+            <h1
+              class="mbr-section-title mbr-bold pb-3 mbr-fonts-style display-1"
+            >
+              AutoGML
+            </h1>
+
+            <p class="mbr-text pb-3 mbr-fonts-style display-5">
+              AutoGML - Automated Graphical based Machine Learning is a
+              Graphical User Interface based Automated Machine Learning System
+              which provides a Machine Learning model without writing a single
+              line of code. AutoGML makes the power of machine learning
+              available to everyone even if they have limited or no knowledge of
+              machine learning.
+            </p>
+            <div class="mbr-section-btn">
+              <a
+                class="btn btn-md btn-secondary display-4"
+                href="{% url 'allProject' %}"
+                >Get Started</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="cid-s6xeKOb8xp mbr-fullscreen mbr-parallax-background"
+      id="header2-3"
+    >
+      <div
+        class="mbr-overlay"
+        style="opacity: 0.5; background-color: rgb(35, 35, 35)"
+      ></div>
+
+      <div class="container align-center">
+        <div class="row justify-content-md-center">
+          <div class="mbr-white col-md-10">
+            <h1
+              class="mbr-section-title mbr-bold pb-3 mbr-fonts-style display-1"
+            >
+              AutoGML - Automated Graphical based Machine Learning
+            </h1>
+
+            <p class="mbr-text pb-3 mbr-fonts-style display-5"></p>
+            <div class="mbr-section-btn">
+              <a
+                class="btn btn-md btn-white-outline display-4"
+                href="{% url 'index_fr' %}"
+                >AutoGML Face Detection</a
+              >
+              <a
+                class="btn btn-md btn-white-outline display-4"
+                href="{% url 'index_clf' %}"
+                >AutoGML Image Classification</a
+              >
+              <a
+                class="btn btn-md btn-white-outline display-4"
+                href="{% url 'index_obj' %}"
+                >AutoGML Object Detection</a
+              >
+              <a
+                class="btn btn-md btn-white-outline display-4"
+                href="{% url 'index_table' %}"
+                >AutoGML Tables</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="header9 cid-s6xeLsi0Cg mbr-fullscreen mbr-parallax-background"
+      id="header9-5"
+    >
+      <div
+        class="mbr-overlay"
+        style="opacity: 0.8; background-color: rgb(255, 255, 255)"
+      ></div>
+
+      <div class="container">
+        <div class="media-container-column mbr-white col-lg-8 col-md-10">
+          <h1
+            class="mbr-section-title align-left mbr-bold pb-3 mbr-fonts-style display-1"
+          >
+            AutoGML Facial Recognization
+          </h1>
+          <p class="mbr-text align-left pb-3 mbr-fonts-style display-5">
+            AutoGML Facial Recognization enables you to classify faces by just
+            training with some images. After deploying model it will give person
+            info by just giving face.
+          </p>
+          <div class="mbr-section-btn align-left">
+            <a
+              class="btn btn-md btn-black-outline display-4"
+              href="{% url 'index_fr' %}"
+              >AutoGML Facial Recognization</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="header9 cid-s6xeLsi0Cg mbr-fullscreen mbr-parallax-background"
+      id="header9-5"
+    >
+      <div
+        class="mbr-overlay"
+        style="opacity: 0.8; background-color: rgb(255, 255, 255)"
+      ></div>
+
+      <div class="container">
+        <div class="media-container-column mbr-white col-lg-8 col-md-10">
+          <h1
+            class="mbr-section-title align-left mbr-bold pb-3 mbr-fonts-style display-1"
+          >
+            AutoGML Object Detection
+          </h1>
+          <p class="mbr-text align-left pb-3 mbr-fonts-style display-5">
+            AutoGML Object Detection enables you to train custom machine
+            learning models that are capable of detecting individual objects in
+            a given image along with its bounding box and label.
+          </p>
+          <div class="mbr-section-btn align-left">
+            <a
+              class="btn btn-md btn-black-outline display-4"
+              href="{% url 'index_obj' %}"
+              >AutoGML Object Detection</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="header9 cid-s6xeLsi0Cg mbr-fullscreen mbr-parallax-background"
+      id="header9-5"
+    >
+      <div
+        class="mbr-overlay"
+        style="opacity: 0.8; background-color: rgb(255, 255, 255)"
+      ></div>
+
+      <div class="container">
+        <div class="media-container-column mbr-white col-lg-8 col-md-10">
+          <h1
+            class="mbr-section-title align-left mbr-bold pb-3 mbr-fonts-style display-1"
+          >
+            AutoGML Image Classification
+          </h1>
+          <p class="mbr-text align-left pb-3 mbr-fonts-style display-5">
+            AutoGML Image Classification enables you to train machine learning
+            models to classify your images according to your own defined labels
+            and deploy Image Classifier easily to your system.
+          </p>
+          <div class="mbr-section-btn align-left">
+            <a
+              class="btn btn-md btn-black-outline display-4"
+              href="{% url 'index_clf'%}"
+              >AutoGML Image Classification</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+    <section
+      class="header9 cid-s6xeLsi0Cg mbr-fullscreen mbr-parallax-background"
+      id="header9-5"
+    >
+      <div
+        class="mbr-overlay"
+        style="opacity: 0.8; background-color: rgb(255, 255, 255)"
+      ></div>
+
+      <div class="container">
+        <div class="media-container-column mbr-white col-lg-8 col-md-10">
+          <h1
+            class="mbr-section-title align-left mbr-bold pb-3 mbr-fonts-style display-1"
+          >
+            AutoGML Tables
+          </h1>
+          <p class="mbr-text align-left pb-3 mbr-fonts-style display-5">
+            AutoGML Tables enables you to automatically build and deploy
+            state-of-the-art machine learning models on structured data at
+            massively increased speed and scale. It provides a trained model by
+            just importing datasets and a few clicks and then deploy it to in
+            your system.
+          </p>
+          <div class="mbr-section-btn align-left">
+            <a
+              class="btn btn-md btn-black-outline display-4"
+              href="{% url 'index_table' %}"
+              >AutoGML Tables</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {% block body %} {% endblock %}
+
+    <script src="{% static 'assets/web/assets/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/popper/popper.min.js' %}"></script>
+    <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/smoothscroll/smooth-scroll.js' %}"></script>
+    <script src="{% static 'assets/dropdown/js/nav-dropdown.js' %}"></script>
+    <script src="{% static 'assets/dropdown/js/navbar-dropdown.js' %}"></script>
+    <script src="{% static 'assets/touchswipe/jquery.touch-swipe.min.js' %}"></script>
+    <script src="{% static 'assets/parallax/jarallax.min.js' %}"></script>
+    <script src="{% static 'assets/playervimeo/vimeo_player.js' %}"></script>
+    <script src="{% static 'assets/viewportchecker/jquery.viewportchecker.js' %}"></script>
+    <script src="{% static 'assets/ytplayer/jquery.mb.ytplayer.min.js' %}"></script>
+    <script src="{% static 'assets/vimeoplayer/jquery.mb.vimeo_player.js' %}"></script>
+    <script src="{% static 'assets/tether/tether.min.js' %}"></script>
+    <script src="{% static 'assets/bootstrapcarouselswipe/bootstrap-carousel-swipe.js' %}"></script>
+    <script src="{% static 'assets/mbr-popup-btns/mbr-popup-btns.js' %}"></script>
+    <script src="{% static 'assets/theme/js/script.js' %}"></script>
+    <script src="{% static 'assets/slidervideo/script.js' %}"></script>
+    <script src="{% static 'assets/formoid/formoid.min.js' %}"></script>
+  </body>
+</html>

@@ -1,0 +1,239 @@
+{% extends 'base_clf.html'%} {% block body %}
+<style>
+  ::-webkit-file-upload-button {
+    margin: 10px;
+    background-color: white;
+    border-radius: 5px;
+    border: 1.2px solid black;
+    color: black;
+    height: 45px;
+    width: 200px;
+  }
+
+  ::-webkit-file-upload-button:hover {
+    background: #0880e8;
+    border: 0.1px solid #0880e8;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0px 12px 22px 1px #333;
+  }
+
+  .btn-get-started {
+    font-family: "Raleway", sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    float: right;
+    margin: 20px;
+    letter-spacing: 1px;
+    display: inline-block;
+    padding: 12px 32px;
+    border-radius: 50px;
+    transition: 0.5s;
+    line-height: 1;
+    margin: 10px;
+    color: #0880e8;
+    background-color: white;
+    -webkit-animation-delay: 0.8s;
+    animation-delay: 0.8s;
+    border: 2px solid #0880e8;
+  }
+
+  .btn-get-started:hover {
+    background: #0880e8;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .box-button {
+    background-color: #fafaff;
+    color: #444444;
+    width: 200px;
+    height: 45px;
+    border: 0.2px solid white;
+    border-radius: 2px;
+    font-size: 20px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    -webkit-appearance: button;
+    appearance: button;
+    outline: none;
+  }
+
+  .box-button:hover {
+    color: #0880e8;
+    box-shadow: 0px 12px 22px 1px #333;
+    background-color: #fafaff;
+  }
+</style>
+
+<section
+  id="hero"
+  style="height: 30vh"
+  class="d-flex justify-cntent-center align-items-center"
+></section>
+
+<br /><br />
+<!-- ======= Portfoio Section ======= -->
+<section id="portfolio" class="portfoio">
+  <div class="container" data-aos="fade-up">
+    <div class="row portfolio-container">
+      <div class="portfolio-item filter-import">
+        <h2 class="animate__animated animate__fadeInDown">
+          <span>Import your Images</span>
+        </h2>
+        <p class="animate__animated animate__fadeInUp">
+          <b
+            >To build custom model, you need to import a set of images to train
+            the model.</b
+          >
+          More images are better to generalize and train your model better. Each
+          image you upload shoud be categorized with the label.
+        </p>
+
+        <div class="filters">
+          <div id="import-type-filter">
+            <div class="radio-hk">
+              <input
+                type="radio"
+                id="github"
+                name="import"
+                value=".github"
+                checked=""
+              />
+              <label for="github">Import zip file from your computer</label
+              ><br />
+            </div>
+            <div class="radio-hk">
+              <input type="radio" id="local" name="import" value=".local" />
+              <label for="local"
+                >Import image directory from your computer</label
+              ><br />
+            </div>
+          </div>
+        </div>
+
+        <div class="import-container">
+          <div class="element-item github">
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <h2 class="animate__animated animate__fadeInUp">
+                <span>Upload zip file from your computer</span>
+              </h2>
+              <p class="animate__animated animate__fadeInUp">
+                Upload ZIP files only.
+              </p>
+              <input
+                type="file"
+                accept=".zip"
+                name="zip-file"
+                id="import-zip"
+                required=""
+              />
+              <br />
+              <button
+                type="submit"
+                name="upload-zip"
+                value="true"
+                style="margin-left: 10vw; margin-top: 10px"
+                class="box-button animate__animated animate__fadeInUp scrollto"
+              >
+                Import
+              </button>
+            </form>
+          </div>
+
+          <div class="element-item local">
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <h2 class="animate__animated animate__fadeInUp">
+                <span>Upload image directory from your computer</span>
+              </h2>
+              <p class="animate__animated animate__fadeInUp">
+                Upload directory containing images of same class. Directory name
+                must be class of images.
+              </p>
+              <input type="hidden" name="dir-name" id="dir-name" />
+              <input
+                type="file"
+                accept=".zip, .png, .jpeg, .jpg"
+                name="local-dirs"
+                id="local_import"
+                webkitdirectory
+                directory
+                required=""
+                multiple
+                onchange="selectFolder(event)"
+              />
+              <br />
+              <button
+                type="submit"
+                value="true"
+                name="upload-dir"
+                style="margin-left: 10vw; margin-top: 10px"
+                class="box-button animate__animated animate__fadeInUp scrollto"
+              >
+                Import
+              </button>
+            </form>
+          </div>
+        </div>
+        {% if error %}
+        <p class="animate__animated animate__fadeInUp" style="color: red">
+          {{error}}
+        </p>
+        {% endif %}
+        <a
+          href="{% url 'image_clf' %}"
+          id="next-button"
+          class="btn-get-started animate__animated animate__fadeInUp scrollto"
+          >Next</a
+        >
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4>Uploded</h4>
+      <span class="close">&times;</span>
+    </div>
+    <div class="modal-body">
+      <p>
+        <em>Image Dataset is uploded successfully.</em>
+        <br />
+      </p>
+      <br />
+    </div>
+    <div class="modal-footer">
+      <button name="okey" id="okey" type="button">Okey</button>
+    </div>
+  </div>
+</div>
+<!-- End Portfoio Section -->
+
+<script>
+  function selectFolder(e) {
+    var theFiles = e.target.files;
+    var relativePath = theFiles[0].webkitRelativePath;
+    var folder = relativePath.split("/");
+    document.querySelector("#dir-name").value = folder[0];
+  }
+</script>
+
+<script>
+  var modal = document.getElementById("myModal");
+  var button = document.getElementById("okey");
+  var span = document.getElementsByClassName("close")[0];
+  if ("{{uploded}}" === "True") {
+    modal.style.display = "block";
+  }
+  span.onclick = function () {
+    modal.style.display = "none";
+  };
+  button.onclick = function () {
+    modal.style.display = "none";
+    document.querySelector("#next-button").click();
+  };
+</script>
+{% endblock %}

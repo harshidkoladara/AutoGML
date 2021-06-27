@@ -1,0 +1,222 @@
+{% extends 'base_clf.html'%} {% block body %}
+<!-- ======= Top Bar ======= -->
+
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="d-flex justify-cntent-center align-items-center">
+  <div
+    id="heroCarousel"
+    class="container carousel carousel-fade"
+    data-ride="carousel"
+  >
+    <!-- Slide 1 -->
+    <div class="carousel-item active">
+      <div class="carousel-container">
+        <h2 class="animate__animated animate__fadeInDown">
+          <span>AutoGML Image Classification</span>
+        </h2>
+        <p class="animate__animated animate__fadeInUp">
+          AutoGML Image Classification enables you to train Machine Learning
+          classification models to classify your images according to your own
+          defined labels and deploy Image Classifier easily to your system.
+        </p>
+        <a
+          href="{% url 'index_img_doc'%}"
+          class="btn-get-started animate__animated animate__fadeInUp scrollto"
+          >Learn More</a
+        >
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="carousel-item">
+      <div class="carousel-container">
+        <h2 class="animate__animated animate__fadeInDown">
+          AutoGML Image Classification
+        </h2>
+        <p class="animate__animated animate__fadeInUp">
+          Develop your own custom image clssifier without write single line of
+          code with AutoGML Image Classification.
+        </p>
+        <a
+          href="{% url 'index_img_doc'%}"
+          class="btn-get-started animate__animated animate__fadeInUp scrollto"
+          >Learn More</a
+        >
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="carousel-item">
+      <div class="carousel-container">
+        <h2 class="animate__animated animate__fadeInDown">
+          AutoGML Image Classification
+        </h2>
+        <p class="animate__animated animate__fadeInUp">
+          Deploy classifier model to your system and make future prediction
+          easily.
+        </p>
+        <a
+          href="{% url 'index_img_doc'%}"
+          class="btn-get-started animate__animated animate__fadeInUp scrollto"
+          >Learn More</a
+        >
+      </div>
+    </div>
+
+    <a
+      class="carousel-control-prev"
+      href="#heroCarousel"
+      role="button"
+      data-slide="prev"
+    >
+      <span
+        class="carousel-control-prev-icon bx bx-chevron-left"
+        aria-hidden="true"
+      ></span>
+      <span class="sr-only">Previous</span>
+    </a>
+
+    <a
+      class="carousel-control-next"
+      href="#heroCarousel"
+      role="button"
+      data-slide="next"
+    >
+      <span
+        class="carousel-control-next-icon bx bx-chevron-right"
+        aria-hidden="true"
+      ></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</section>
+<!-- End Hero -->
+
+<main id="main">
+  <!-- ======= Icon Boxes Section ======= -->
+  <section id="icon-boxes" class="icon-boxes">
+    <div class="container">
+      <div class="row">
+        <div
+          class="col-md-6 col-lg-3 align-items-stretch mb-5 mb-lg-1"
+          data-aos="fade-up"
+        >
+          <div class="icon-box">
+            <div class="icon">
+              <a href="{% url 'createProject_clf' %}"
+                ><i class="bx bx-plus"></i
+              ></a>
+            </div>
+            <h4 class="title">
+              <a href="{% url 'createProject_clf' %}">Add Project</a>
+            </h4>
+            <p class="description">Create new project</p>
+          </div>
+          <br />
+        </div>
+
+        {% for model in models %}
+        <div
+          style="padding-bottom: 30px"
+          class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+          <div class="icon-box">
+            <div class="icon">
+              <a href="{% url 'caller_clf' model.project_id %}"
+                ><i class="bx bx-file"></i
+              ></a>
+            </div>
+            <h4 class="title">
+              <a href="{% url 'caller_clf' model.project_id %}"
+                >{{model.name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a
+              >
+            </h4>
+          </div>
+          <br />
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  <!-- End Icon Boxes Section -->
+
+  <!-- ======= Services Section ======= -->
+  <section id="services" class="services">
+    <div class="container" data-aos="fade-up">
+      <div class="section-title">
+        <h2>Services</h2>
+      </div>
+
+      <div class="row">
+        <div
+          class="col-md-6 d-flex align-items-stretch"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+          <div class="icon-box">
+            <i class="icofont-image"></i>
+            <h4><a href="#">Image Classification</a></h4>
+            <p>
+              AutoGML Image Classification provides a custom trained model on
+              your data by just importing the data.
+            </p>
+          </div>
+        </div>
+        <div
+          class="col-md-6 d-flex align-items-stretch mt-4 mt-md-0"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        >
+          <div class="icon-box">
+            <i class="icofont-download"></i>
+            <h4><a href="#">Download</a></h4>
+            <p>
+              You can download your custom trained model and later use with your
+              application where you want.
+            </p>
+          </div>
+        </div>
+        <div
+          class="col-md-6 d-flex align-items-stretch mt-4 mt-md-0"
+          data-aos="fade-up"
+          data-aos-delay="300"
+        >
+          <div class="icon-box">
+            <i class="icofont-brainstorming"></i>
+            <h4><a href="#">Classify in system</a></h4>
+            <p>
+              Detect class of images by just importing images in AutoGML and
+              predict class of images and also download report about the
+              classified images.
+            </p>
+          </div>
+        </div>
+        <div
+          class="col-md-6 d-flex align-items-stretch mt-4 mt-md-0"
+          data-aos="fade-up"
+          data-aos-delay="400"
+        >
+          <div class="icon-box">
+            <i class="icofont-server"></i>
+            <h4><a href="#">API (Comming Soon)</a></h4>
+            <p>
+              With API enables you to embed your classification model to your
+              application or website by just importing some credentials.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Services Section -->
+</main>
+<!-- End #main -->
+
+<!-- ======= Footer ======= -->
+
+<a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
+<div id="preloader"></div>
+
+{% endblock %}
